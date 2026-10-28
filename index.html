@@ -1,12 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifekeys Maritime — Fleet Wellbeing & Compliance Report (September 2026)</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Independent maritime compliance and reporting work sample by Aldrin M. Ulep, using fictional data."><title>Lifekeys | Maritime Reporting Work Sample · Aldrin M. Ulep</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
         :root {
             --sky-blue: #0284c7;
             --ocean-blue: #0f172a;
@@ -384,353 +377,267 @@
             background: rgba(15, 23, 42, 0.95);
             margin-top: auto;
         }
-    </style>
-</head>
-<body>
-
-    <!-- Main Content Layout -->
-    <main class="main-container">
-        
-        <!-- Grand Immersive Banner (Crystal clear overview.jpg on load, centered title) -->
-        <div id="immersiveBanner" class="immersive-banner">
-            <div class="banner-overlay">
-                <header class="hero">
-                    <h1>Lifekeys Maritime Fleet Wellbeing</h1>
-                    <p>Executive Client Intelligence Portal — September 2026 Portfolio Review</p>
-                    <div class="author-badge">Independent Maritime Work Sample by Aldrin M. Ulep</div>
-                    <div class="disclaimer-note">Not an official Lifekeys product. All illustrative data is fictional.</div>
-                </header>
-            </div>
-        </div>
-
-        <!-- Prompt Text (Disappears permanently on first tab click) -->
-        <div class="prompt-box" id="promptBox">
-            👇 Select any tab below to inspect executive reports and metrics
-        </div>
-
-        <!-- Evenly Distributed Tabs Bar -->
-        <div class="folder-tabs-bar">
-            <button class="folder-tab" onclick="switchTab(event, 'fleet', 'fleet.jpg')">
-                📁 Fleet Overview
-            </button>
-            <button class="folder-tab" onclick="switchTab(event, 'vessel', 'vessel.jpg')">
-                🚢 Example Vessel A
-            </button>
-            <button class="folder-tab" onclick="switchTab(event, 'compliance', 'compliance.jpg')">
-                ⚖️ Compliance & Regulatory
-            </button>
-            <button class="folder-tab" onclick="switchTab(event, 'governance', 'governance.jpg')">
-                🔒 Data Governance & Privacy
-            </button>
-        </div>
-
-        <!-- Solid White Report Container (Appears Below Tabs) -->
-        <div id="reportContainer" class="report-container">
-
-            <!-- 1. FLEET OVERVIEW TAB -->
-            <div id="fleet" class="tab-panel">
-                <h2>Fleet-Wide Wellbeing Summary</h2>
-                <p class="section-desc">Portfolio snapshot across 12 illustrative vessels for September 2026. Highlighting submission rates, engagement, and operational sentiment drivers.</p>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">83.3%</div>
-                        <div class="stat-label">Vessel Check-In Rate</div>
-                        <div class="stat-sub">10 of 12 vessels reporting</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">76.7%</div>
-                        <div class="stat-label">Daily Reply Coverage</div>
-                        <div class="stat-sub">5,520 replies / 7,200 crew-days (Reporting vessels only)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">80.0%</div>
-                        <div class="stat-label">Service Use</div>
-                        <div class="stat-sub">192 / 240 crew (Reporting vessels)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">68.9%</div>
-                        <div class="stat-label">Module Completion</div>
-                        <div class="stat-sub">124 / 180 assigned courses</div>
-                    </div>
-                </div>
-
-                <!-- Calculation Rules Box -->
-                <div style="background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 2rem;">
-                    <h4 style="font-size: 0.95rem; color: var(--ocean-blue); margin-bottom: 0.5rem;">📊 Report Fields & Calculation Rules</h4>
-                    <p style="font-size: 0.85rem; color: var(--slate-gray); margin-bottom: 0.5rem;">
-                        <strong>Coverage Rule:</strong> Valid daily replies divided by eligible crew-days from roster (reconciled for reporting vessels prior to release).<br>
-                        <strong>Outcome Note:</strong> Baseline month data; no proven clinical improvement or long-term behavioral outcome is established in this illustrative sample.
-                    </p>
-                </div>
-
-                <div class="grid-2">
-                    <div class="chart-box">
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Reported Mood Distribution</h3>
-                        <canvas id="moodChart" style="max-height: 250px;"></canvas>
-                    </div>
-                    <div>
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Operational Context Analysis</h3>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Condition</th>
-                                    <th>Frustration Share</th>
-                                    <th>Key Observation</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Port / Transition Days</strong></td>
-                                    <td><span style="color: #e11d48; font-weight: 600;">13.2%</span></td>
-                                    <td>Frustration replies were more common on port days; this association does not establish a cause.</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Sea-Only Days</strong></td>
-                                    <td><span style="color: #059669; font-weight: 600;">7.9%</span></td>
-                                    <td>Stable routines during ocean transits.</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Missing Submissions</strong></td>
-                                    <td>2 Vessels</td>
-                                    <td>Reconciled and followed up by shore analyst prior to release.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. INDIVIDUAL VESSEL TAB -->
-            <div id="vessel" class="tab-panel">
-                <h2>Vessel Deep-Dive: Example Vessel A</h2>
-                <p class="section-desc">Detailed activity uptake, rest constraints, and participation barriers for September 2026 (24 crew on board, 18 active participants).</p>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">75.0%</div>
-                        <div class="stat-label">Check-In Coverage</div>
-                        <div class="stat-sub">540 replies / 720 eligible crew-days</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">67.9%</div>
-                        <div class="stat-label">Event Attendance Rate</div>
-                        <div class="stat-sub">55 attended / 81 available opportunities</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">32.1%</div>
-                        <div class="stat-label">Missed Opportunities</div>
-                        <div class="stat-sub">26 available slots went unused</div>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div>
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Reasons for Missed Opportunities (89 Instances)</h3>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Reason Category</th>
-                                    <th>Share</th>
-                                    <th>Instances</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>On Duty / Watchkeeping</td>
-                                    <td>42.7%</td>
-                                    <td>38</td>
-                                </tr>
-                                <tr>
-                                    <td>Protected Rest / Fatigue</td>
-                                    <td>28.1%</td>
-                                    <td>25</td>
-                                </tr>
-                                <tr>
-                                    <td>Personal Choice</td>
-                                    <td>16.9%</td>
-                                    <td>15</td>
-                                </tr>
-                                <tr>
-                                    <td>No Reason Given</td>
-                                    <td>12.4%</td>
-                                    <td>11</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="chart-box">
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Missed Activity Breakdown</h3>
-                        <canvas id="missedChart" style="max-height: 250px;"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. COMPLIANCE & REGULATORY TAB -->
-            <div id="compliance" class="tab-panel">
-                <h2>Regulatory & Compliance Alignment</h2>
-                <p class="section-desc">Mapping Lifekeys support metrics directly to International Labour Organization (ILO) Maritime Labour Convention (MLC) 2006 standards and IMO frameworks.</p>
-
-                <div class="grid-2">
-                    <div>
-                        <div class="compliance-card">
-                            <span class="badge-mlc">MLC A2.3 / STCW A-VIII/1</span>
-                            <h4>Rest and Fatigue Management</h4>
-                            <p><strong>Support:</strong> Fatigue education & aggregate context.<br><strong>Evidence:</strong> Work/rest breach logs, circumstances, Chief Officer review logs.</p>
-                        </div>
-                        <div class="compliance-card">
-                            <span class="badge-mlc">MLC A4.3(1)(a) / ISO 45003</span>
-                            <h4>Safety and Psychosocial Risk</h4>
-                            <p><strong>Support:</strong> Organizational surveys & awareness.<br><strong>Evidence:</strong> SMS risk records, mitigation controls, and designated owner follow-up.</p>
-                        </div>
-                        <div class="compliance-card">
-                            <span class="badge-mlc">MLC A3.1(17)</span>
-                            <h4>Recreation & Connection</h4>
-                            <p><strong>Support:</strong> Activity planning and participation tracking.<br><strong>Evidence:</strong> Dated events, distinct participants, duty/rest availability logs.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="compliance-card">
-                            <span class="badge-mlc">MLC A4.1</span>
-                            <h4>Professional Support</h4>
-                            <p><strong>Support:</strong> Psychological support and confidential referral routes.<br><strong>Evidence:</strong> Current access channels and incident follow-up (excluding clinical details).</p>
-                        </div>
-                        <div class="compliance-card">
-                            <span class="badge-mlc">MLC A5.1.5</span>
-                            <h4>Protected Reporting</h4>
-                            <p><strong>Support:</strong> Awareness of onboard grievance channels.<br><strong>Evidence:</strong> Complaint procedures and communication records (check-ins ≠ complaint channels).</p>
-                        </div>
-                        <div class="compliance-card" style="border-left-color: var(--slate-gray);">
-                            <span class="badge-mlc" style="background: #f1f5f9; color: var(--slate-gray);">Referenced Only (Outside Scope)</span>
-                            <h4>Living & Employment Conditions</h4>
-                            <p><strong>Support:</strong> Flag aggregate feedback to responsible shore teams.<br><strong>Evidence:</strong> Accommodation, catering, and employment action tracking records. Note: Lifekeys does not certify living conditions.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. DATA GOVERNANCE & PRIVACY TAB -->
-            <div id="governance" class="tab-panel">
-                <h2>Data Governance & Privacy Safeguards</h2>
-                <p class="section-desc">Built upon Department of Information and Communications Technology (DICT) Privacy Impact Assessment training and data governance standards.</p>
-
-                <div class="stats-grid">
-                    <div class="stat-card" style="border-left-color: var(--sky-blue);">
-                        <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Data Isolation</div>
-                        <div class="stat-label">Wellbeing vs. Personnel Files</div>
-                        <div class="stat-sub">Reduces risk by keeping voluntary check-ins separate from named work records</div>
-                    </div>
-                    <div class="stat-card" style="border-left-color: var(--sky-blue);">
-                        <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Anonymity Thresholds</div>
-                        <div class="stat-label">Small Group Suppression</div>
-                        <div class="stat-sub">Reduces risk of individual identification in small vessel cohorts</div>
-                    </div>
-                    <div class="stat-card" style="border-left-color: var(--sky-blue);">
-                        <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Traceable Source ID</div>
-                        <div class="stat-label">Defined Calculations</div>
-                        <div class="stat-sub">Metrics tied to documented source data versions, review dates, and IDs</div>
-                    </div>
-                </div>
-
-                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: var(--ocean-blue); margin-bottom: 0.75rem;">Review Workflow & Action Ownership</h3>
-                    <p style="font-size: 0.9rem; color: var(--slate-gray); margin-bottom: 1rem;">To maintain data integrity before executive client release, the following protocol is enforced:</p>
-                    <ul style="margin-left: 1.5rem; font-size: 0.9rem; color: var(--ocean-blue); display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li><strong>Shore Analyst Verification:</strong> Reconcile missing vessel data prior to calculating fleet-wide averages.</li>
-                        <li><strong>Chief Officer Review:</strong> Evaluate port-call workload associations before subsequent close-call berthing sequences.</li>
-                        <li><strong>Action Tracking:</strong> Assign unique Action IDs, owners, due dates, and closure evidence for all identified follow-ups.</li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        Lifekeys Maritime Fleet Wellbeing Portal — Designed for Executive Review & Client Compliance Audits | Report compiled by Aldrin M. Ulep (Independent Work Sample)
-    </footer>
-
-    <!-- JavaScript for Tab Switching, Compressing Banner, Hiding Prompt, and Charts -->
-    <script>
-        function switchTab(evt, tabName, bgImage) {
-            // Compress grand banner, switch to section photo, and activate gradient overlay
-            const banner = document.getElementById('immersiveBanner');
-            banner.classList.add('compressed');
-            banner.style.backgroundImage = `url("${bgImage}")`;
-
-            // Hide prompt box permanently after first click
-            const prompt = document.getElementById('promptBox');
-            prompt.classList.add('hidden');
-
-            // Open solid white report container below tabs
-            const reportContainer = document.getElementById('reportContainer');
-            reportContainer.classList.add('active');
-
-            // Switch tab panels
-            const panels = document.getElementsByClassName('tab-panel');
-            for (let p of panels) {
-                p.classList.remove('active');
-            }
-
-            const tabs = document.getElementsByClassName('folder-tab');
-            for (let t of tabs) {
-                t.classList.remove('active');
-            }
-
-            document.getElementById(tabName).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
-
-        // Initialize Mood Distribution Chart
-        const ctxMood = document.getElementById('moodChart').getContext('2d');
-        new Chart(ctxMood, {
-            type: 'doughnut',
-            data: {
-                labels: ['Happy / Calm (41.6%)', 'Neutral (28.4%)', 'Sad / Low (13.8%)', 'Angry / Frustrated (9.5%)', 'Anxious / Worried (6.7%)'],
-                datasets: [{
-                    data: [41.6, 28.4, 13.8, 9.5, 6.7],
-                    backgroundColor: ['#059669', '#38bdf8', '#f59e0b', '#ef4444', '#8b5cf6'],
-                    borderWidth: 2,
-                    borderColor: '#ffffff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { boxWidth: 12, font: { size: 11 } }
-                    }
-                }
-            }
-        });
-
-        // Initialize Missed Opportunities Chart
-        const ctxMissed = document.getElementById('missedChart').getContext('2d');
-        new Chart(ctxMissed, {
-            type: 'bar',
-            data: {
-                labels: ['On Duty', 'Protected Rest', 'Personal Choice', 'No Reason Given'],
-                datasets: [{
-                    label: 'Missed Instances',
-                    data: [38, 25, 15, 11],
-                    backgroundColor: '#0284c7',
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { beginAtZero: true, grid: { display: false } },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+    
+/* Review revision: preserve photo banner and folder navigation. */
+:root{--lifekeys-green:#047857}
+body{overflow-wrap:break-word}
+.main-container{max-width:1320px}
+.immersive-banner{height:320px;justify-content:flex-end}
+.immersive-banner.compressed{height:260px}
+.banner-overlay,.immersive-banner.compressed .banner-overlay{background:linear-gradient(transparent,rgba(8,22,36,.9));padding:2rem}
+.author-badge{color:#ecfdf5;background:#065f46;border-color:#34d399}
+.hero h1{font-size:2.25rem}
+.hero p{font-size:1rem}
+.disclaimer-note{color:#f1f5f9}
+.folder-tabs-bar{flex-wrap:wrap;padding:.5rem .5rem 0;gap:.35rem}
+.folder-tab{flex:1 1 180px;white-space:normal;min-height:48px;font-size:.85rem}
+.folder-tab:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #0284c7;outline-offset:3px}
+.tab-panel[hidden]{display:none!important}
+.tab-panel{animation:none}
+.report-container{display:block}
+.section-top{display:flex;gap:1rem;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.eyebrow{display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;color:#047857;margin-bottom:.45rem}
+.status{font-size:.78rem;font-weight:700;padding:.4rem .7rem;border-radius:30px;background:#ecfdf5;color:#065f46}
+.status.amber{background:#fffbeb;color:#92400e}
+.note{background:#f1f5f9;border-left:3px solid #0284c7;padding:1.1rem 1.3rem;border-radius:0 8px 8px 0;margin:1.3rem 0}
+.note p{font-size:.9rem;margin-top:.4rem;color:#334155}
+.note.amber{background:#fffbeb;border-color:#d97706}
+.note.info{background:#ecfdf5;border-color:#059669}
+.small{font-size:.82rem;color:#475569;margin:.9rem 0}
+.table-wrap{overflow:auto;width:100%;margin:1rem 0;border-radius:8px}
+.data-table{margin:0;min-width:480px}
+.data-table td{vertical-align:top}
+.data-table th{font-size:.8rem;color:#475569}
+.data-table td{font-size:.84rem}
+.data-table code{font-family:ui-monospace,monospace;font-size:.8rem}
+h3{font-size:1.1rem;margin:1.75rem 0 .5rem}
+.chart-box h3{margin:0 0 1rem}
+.chart-box{height:auto;min-height:340px}
+.grid-2>*{min-width:0}
+.donut-wrap{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;justify-content:center;width:100%}
+.donut-wrap svg{width:170px;height:170px;flex-shrink:0}
+.legend{list-style:none;font-size:.8rem}
+.legend li{margin:.4rem 0}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.45rem}
+details{margin:1.2rem 0;border:1px solid #cbd5e1;border-radius:8px}
+summary{cursor:pointer;font-weight:600;padding:1rem;color:#0f172a;background:#f8fafc}
+.detail-body{padding:1rem 1.3rem;font-size:.9rem}
+.detail-body ul,.detail-body ol{padding-left:1.3rem}
+.detail-body li{margin:.65rem 0}
+.detail-body p+p{margin-top:.7rem}
+.actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin:1rem 0}
+.action-button{background:#065f46;color:white;border:0;border-radius:8px;padding:.75rem 1rem;font-size:.85rem;font-weight:600;cursor:pointer}
+.action-button:hover{background:#047857}
+.equation{font-size:2rem;font-weight:700;color:#047857;margin:1rem 0 .25rem}
+.equation span{font-size:1rem;color:#334155;font-weight:500}
+.check-list{padding-left:1.2rem}
+.check-list li{margin:.55rem 0;font-size:.9rem}
+.check-pass{color:#065f46}.check-warn{color:#92400e}.check-fail{color:#b91c1c}
+a{color:#0369a1;text-underline-offset:3px}
+footer a{color:#7dd3fc}
+.skip-link{position:absolute;top:-100px;left:1rem;background:white;padding:1rem;z-index:100}
+.skip-link:focus{top:1rem}
+@media(max-width:768px){.main-container{padding:0 .8rem;margin:1rem auto}.report-container{padding:1.3rem}.hero h1{font-size:1.65rem}.hero p{font-size:.9rem}.banner-overlay{padding:1.5rem 1rem}.immersive-banner{height:320px}.folder-tab{flex:1 1 calc(50% - 8px)}.grid-2{gap:1rem}.stats-grid{grid-template-columns:1fr 1fr;gap:.7rem}.stat-card{padding:1rem}.stat-value{font-size:1.65rem}.stat-label{font-size:.7rem}.stat-sub{font-size:.75rem}.author-badge{font-size:.75rem}.disclaimer-note{font-size:.72rem}}
+@media(max-width:380px){.stats-grid{grid-template-columns:1fr}.folder-tab{font-size:.75rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{body{background:white;color:black}.main-container{max-width:none;margin:0;padding:0}.immersive-banner{height:auto!important;background:none!important;box-shadow:none;border:0}.banner-overlay{background:none!important;padding:0}.hero h1,.hero p,.disclaimer-note{color:black;text-shadow:none}.author-badge{color:black;background:none;backdrop-filter:none}.folder-tabs-bar,.actions,.skip-link{display:none}.report-container{padding:0;border:0;box-shadow:none}.tab-panel,.tab-panel[hidden]{display:block!important;break-before:page}.tab-panel:first-child{break-before:auto}.table-wrap{overflow:visible}.data-table{min-width:0}.data-table td{font-size:9pt}.note,.stat-card{break-inside:avoid}.grid-2{display:block}.hero h1{font-size:22pt}footer{background:none;color:black}.detail-body{display:block}}
+</style></head>
+<body><a class="skip-link" href="#reportContainer">Skip to report</a><main class="main-container">
+<div id="immersiveBanner" class="immersive-banner"><div class="banner-overlay"><header class="hero"><h1>Maritime wellbeing & reporting</h1><p>A proposed compliance and reporting approach for Lifekeys</p><div class="author-badge">Independent work sample · Aldrin M. Ulep</div><div class="disclaimer-note">Fictional September 2026 data · Not an official Lifekeys product</div></header></div></div>
+<nav class="folder-tabs-bar" role="tablist" aria-label="Report sections"><button class="folder-tab active" id="tab-fleet" role="tab" aria-controls="fleet" aria-selected="true" tabindex="0" data-panel="fleet" data-image="fleet.jpg">Fleet overview</button><button class="folder-tab " id="tab-vessel" role="tab" aria-controls="vessel" aria-selected="false" tabindex="-1" data-panel="vessel" data-image="vessel.jpg">Example Vessel A</button><button class="folder-tab " id="tab-compliance" role="tab" aria-controls="compliance" aria-selected="false" tabindex="-1" data-panel="compliance" data-image="compliance.jpg">Compliance map</button><button class="folder-tab " id="tab-governance" role="tab" aria-controls="governance" aria-selected="false" tabindex="-1" data-panel="governance" data-image="governance.jpg">Privacy & review</button><button class="folder-tab " id="tab-specification" role="tab" aria-controls="specification" aria-selected="false" tabindex="-1" data-panel="specification" data-image="compliance.jpg">Reporting specification</button><button class="folder-tab " id="tab-client" role="tab" aria-controls="client" aria-selected="false" tabindex="-1" data-panel="client" data-image="overview.jpg">Client & improvement</button></nav>
+<div id="reportContainer" class="report-container active" tabindex="-1"><section id="fleet" class="tab-panel active" role="tabpanel" aria-labelledby="tab-fleet">
+<div class="section-top"><div><span class="eyebrow">01 / CLIENT REPORT</span><h2>Fleet overview</h2></div><span class="status amber">Partial coverage · 10 of 12 vessels</span></div>
+<p class="section-desc">September 2026 · Fictional portfolio of 12 vessels. The two missing submissions are excluded from usage and reply denominators; they remain visible in the reporting-completeness measure.</p>
+<div class="stats-grid"><div class="stat-card"><div class="stat-value" id="fleet-reporting">—</div><div class="stat-label">Vessels reporting</div><div class="stat-sub">10 / 12 expected vessels · S01</div></div><div class="stat-card"><div class="stat-value" id="fleet-replies">—</div><div class="stat-label">Daily reply coverage</div><div class="stat-sub">5,520 / 7,200 eligible crew-days · S01–S02</div></div><div class="stat-card"><div class="stat-value" id="fleet-use">—</div><div class="stat-label">Service reach</div><div class="stat-sub">192 / 240 eligible crew · S03</div></div><div class="stat-card"><div class="stat-value" id="fleet-learning">—</div><div class="stat-label">Course completion</div><div class="stat-sub">124 / 180 due assignments · S04</div></div></div>
+<div class="note info"><strong>What a client can conclude</strong><p>The sample describes access, service use and engagement among reporting vessels. It establishes a baseline; no clinical improvement, reduced fatigue or causal effect is demonstrated. The portfolio picture remains incomplete.</p></div>
+<div class="grid-2"><div class="chart-box"><h3>Reported feelings</h3><div id="mood-visual" class="donut-wrap"></div></div><div><h3>Operational context</h3>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Day category</th><th scope="col">Frustration replies</th><th scope="col">Interpretation</th></tr></thead><tbody><tr><td>Port / transition</td><td>220 / 1,664 · 13.2%</td><td>Higher share among submitted replies; does not establish cause.</td></tr><tr><td>Sea-only</td><td>304 / 3,856 · 7.9%</td><td>Lower share among submitted replies; does not prove stable routines.</td></tr><tr><td>Missing vessels</td><td>2 / 12</td><td>Follow-up pending in this example; no assumed zero replies.</td></tr></tbody></table></div>
+<p class="small">S02 contains fictional aggregate counts. Repeat replies from the same crew member are possible; these are reply shares, not the prevalence of distress among individuals.</p></div></div>
+<details><summary>Inspect the counts behind the feelings chart</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Response category</th><th scope="col">Replies</th><th scope="col">Share</th></tr></thead><tbody><tr><td>Happy / calm</td><td>2,296</td><td>41.6%</td></tr><tr><td>Neutral</td><td>1,568</td><td>28.4%</td></tr><tr><td>Sad / low</td><td>760</td><td>13.8%</td></tr><tr><td>Angry / frustrated</td><td>524</td><td>9.5%</td></tr><tr><td>Anxious / worried</td><td>372</td><td>6.7%</td></tr></tbody></table></div><p class='small'>Total: 5,520 valid replies. Percentages use unrounded counts and display one decimal place. Rounding can affect displayed totals.</p></div></details>
+<div class="note "><strong>Client follow-up</strong><p>Confirm missing submissions with the two vessel contacts. Review access barriers and duty/rest constraints with the appropriate operational owners. Do not infer individual wellbeing from the charts.</p></div>
+</section>
+<section id="vessel" class="tab-panel" role="tabpanel" aria-labelledby="tab-vessel" hidden>
+<span class="eyebrow">02 / VESSEL FOLLOW-UP</span><h2>Example Vessel A</h2><p class="section-desc">Fictional September baseline · 24 crew throughout 30 days · six activities. Participation is assessed against opportunities available without compromising duty or protected rest.</p>
+<div class="stats-grid"><div class="stat-card"><div class="stat-value" id="vessel-replies">—</div><div class="stat-label">Daily reply coverage</div><div class="stat-sub">540 / 720 eligible crew-days · S02</div></div><div class="stat-card"><div class="stat-value" id="vessel-uptake">—</div><div class="stat-label">Uptake when available</div><div class="stat-sub">55 attendances / 81 available opportunities · S05</div></div><div class="stat-card"><div class="stat-value" id="vessel-unused">—</div><div class="stat-label">Available but unused</div><div class="stat-sub">26 / 81 available opportunities · S05</div></div><div class="stat-card"><div class="stat-value" id="vessel-reach">—</div><div class="stat-label">Distinct activity reach</div><div class="stat-sub">18 / 24 crew attended at least once · S05</div></div></div>
+<div class="grid-2"><div><h3>Every opportunity accounted for</h3><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Outcome</th><th scope="col">Instances</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>Attended</td><td>55</td><td>Crew-event attendances, not 55 distinct people.</td></tr><tr><td>On duty / watchkeeping</td><td>38</td><td>Unavailable; excluded from the uptake denominator.</td></tr><tr><td>Protected rest / fatigue</td><td>25</td><td>Unavailable; excluded from the uptake denominator.</td></tr><tr><td>Available · chose not to attend</td><td>15</td><td>Voluntary non-participation.</td></tr><tr><td>Available · no reason given</td><td>11</td><td>No explanation required.</td></tr></tbody></table></div></div><div><h3>Reconciliation</h3><div class="equation">144 <span>crew-event opportunities</span></div><p>6 events × 24 crew = 144</p><p>55 attended + 38 duty + 25 rest + 15 choice + 11 no reason = 144</p><div class="equation">81 <span>available opportunities</span></div><p>55 attended + 15 choice + 11 no reason = 81</p><div class="note "><strong>89 total non-attendance instances</strong><p>63 were unavailable because of duty or rest; 26 were available but did not attend. These are different reporting groups.</p></div></div></div>
+<div class="note "><strong>Proposed follow-up · ACT-02</strong><p>Offer a second optional session for crew unavailable during the original event. Master / Chief Officer to confirm that the plan preserves watchkeeping and rest. Check availability-adjusted uptake next month; record the offer, attendance totals and any remaining access barriers. This is a proposal, not a completed action or proven outcome.</p></div>
+<p class="small">Small-group reason counts are shown only because this is fictional demonstration data. A real client export would need disclosure review and suppression, including protection against inferring hidden values from totals.</p>
+</section>
+<section id="compliance" class="tab-panel" role="tabpanel" aria-labelledby="tab-compliance" hidden>
+<span class="eyebrow">03 / REQUIREMENT TO EVIDENCE</span><h2>Compliance support map</h2><p class="section-desc">Selected references translated into proposed reporting requirements. Shipowner obligations, flag-state implementation and the actual service contract determine applicability. This sample does not certify compliance.</p>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Reference / context</th><th scope="col">Proposed reporting contribution</th><th scope="col">Records for a client review</th><th scope="col">Boundary</th></tr></thead><tbody><tr><td><a href='https://www.ilo.org/resource/other/maritime-labour-convention-2006-amended-including-2022-amendments'>MLC A2.3</a> · hours of work and rest</td><td>Report availability around duty/rest and record access barriers.</td><td>Activity availability totals; operator-held work/rest records and reviewed exceptions.</td><td>Attendance or course completion does not prove rest compliance.</td></tr><tr><td><a href='https://www.ilo.org/resource/other/maritime-labour-convention-2006-amended-including-2022-amendments'>MLC A3.1(17)</a> · recreation and social connectivity</td><td>Show whether optional activities and support routes are accessible.</td><td>Event dates, opportunities, distinct reach and follow-up records.</td><td>Does not certify facilities or connectivity provision.</td></tr><tr><td><a href='https://www.ilo.org/resource/other/maritime-labour-convention-2006-amended-including-2022-amendments'>MLC A4.3</a> · health and safety</td><td>Provide aggregate context for the operator's risk review.</td><td>Risk assessment, assigned controls, action owner and closure evidence.</td><td>Mood replies are not a diagnosis or proof of risk control.</td></tr><tr><td><a href='https://www.ilo.org/resource/other/maritime-labour-convention-2006-amended-including-2022-amendments'>MLC A4.1</a> · medical care</td><td>Document approved access routes and information about professional support.</td><td>Current provider/access information; service scope and escalation arrangements.</td><td>Actual medical-care duties and emergency response remain with responsible parties.</td></tr><tr><td><a href='https://www.ilo.org/resource/other/maritime-labour-convention-2006-amended-including-2022-amendments'>MLC A5.1.5</a> · onboard complaints</td><td>Show that communications distinguish voluntary check-ins from complaint procedures.</td><td>Operator's procedure, communication record and review date.</td><td>Check-ins do not replace protected complaint channels.</td></tr><tr><td><a href='https://www.imo.org/en/ourwork/humanelement/pages/fatigue.aspx'>IMO MSC.1/Circ.1598</a> · guidance</td><td>Offer fatigue-awareness learning and contextual reporting for review.</td><td>Learning record and operator-held fatigue-management documentation.</td><td>Guidance is not a standalone certification standard.</td></tr></tbody></table></div>
+<details><summary>Worked translation: recreation and connection</summary><div class="detail-body"><ol><li><strong>Requirement context:</strong> recreational facilities, amenities and services, including social connectivity.</li><li><strong>Operational question:</strong> can crew access an activity without losing duty coverage or rest?</li><li><strong>Reporting requirement:</strong> show distinct reach separately from attendance among available crew.</li><li><strong>Evidence:</strong> S05 event totals, availability classifications and ACT-02 follow-up.</li><li><strong>Limit:</strong> participation is supporting context; the operator must demonstrate the underlying facilities and arrangements.</li></ol></div></details>
+<div class="note "><strong>Outside this proposal</strong><p>Accommodation inspections, catering, employment agreements and statutory certification remain outside the proposed reporting service. Relevant feedback would be routed to the responsible operator team.</p></div>
+<p class="small">References reviewed 29 October 2026. The links identify public sources; the mapping is an independent proposed interpretation for discussion with Lifekeys and the client.</p>
+</section>
+<section id="governance" class="tab-panel" role="tabpanel" aria-labelledby="tab-governance" hidden>
+<span class="eyebrow">04 / GOVERNANCE BY DESIGN</span><h2>Privacy and review controls</h2><p class="section-desc">Proposed safeguards informed by my DICT Privacy Impact Assessment and Data Privacy training. Production decisions require an agreed purpose, lawful basis, responsibilities and retention schedule.</p>
+<div class="grid-2"><div class="note "><strong>Separate datasets</strong><p>Voluntary wellbeing responses would be kept separate from named work/rest and personnel records. Client reports would receive approved aggregates. Clinical content and individual support histories would not appear in these reports.</p></div><div class="note "><strong>Limit small-group disclosure</strong><p>Proposed starting rule: suppress a subgroup below five distinct contributors. Also assess rare categories, totals that reveal a hidden cell, repeated reports and combined filters. Five is a design assumption for review, not a legal guarantee of anonymity.</p></div><div class="note "><strong>Define access and retention</strong><p>An analyst prepares aggregates; a designated reviewer approves releases; clients receive the agreed report. Retention and deletion rules would be defined per dataset before live collection, with access logged and periodically reviewed.</p></div><div class="note "><strong>Protect voluntary participation</strong><p>Non-response and choosing not to attend would not be treated as poor performance. Self-reported feelings are not clinical assessments. Existing support and complaint routes must remain clear and accessible.</p></div></div>
+<h3>Proposed release workflow</h3>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Stage</th><th scope="col">Owner role</th><th scope="col">Required evidence</th></tr></thead><tbody><tr><td>Validate inputs</td><td>Reporting analyst</td><td>Source IDs, date range, duplicates check, roster denominator and reconciled totals.</td></tr><tr><td>Review operational context</td><td>Designated operator contact</td><td>Confirmation of duty/rest definitions and aggregate access barriers; no individual wellbeing linkage.</td></tr><tr><td>Review disclosure</td><td>Privacy / reporting reviewer</td><td>Suppression decisions, permissions and approved client scope.</td></tr><tr><td>Approve and issue</td><td>Report owner</td><td>Version, reviewed scope, known omissions and approval timestamp.</td></tr><tr><td>Follow up</td><td>Assigned action owner</td><td>Due date, action taken, evidence of closure and next-period review.</td></tr></tbody></table></div>
+<div class="note amber"><strong>Current example release status</strong><p>Partial-coverage demonstration. Two vessel submissions remain missing. A production report would either be held or explicitly approved for release with that limitation; missing figures would never be silently treated as zero.</p></div>
+</section>
+<section id="specification" class="tab-panel" role="tabpanel" aria-labelledby="tab-specification" hidden>
+<span class="eyebrow">05 / PRODUCT & AUTOMATION</span><h2>Reporting specification</h2><p class="section-desc">A proposed handoff from maritime requirements to product development: what to collect, how to calculate it and what must pass before a client report is issued.</p>
+<div class="actions"><button class="action-button" id="download-inputs">Download fictional inputs · CSV</button><span class="small">Aggregate example inputs only; no personal or clinical records.</span></div>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Metric / proposed fields</th><th scope="col">Calculation and example</th><th scope="col">Input checks / source</th></tr></thead><tbody><tr><td>Vessel reporting<br><code>period, vessel_code, submission_status</code></td><td>Unique accepted submissions / expected vessels.<br>10 / 12 = 83.3%.</td><td>One accepted record per vessel-period; two missing statuses preserved. S01.</td></tr><tr><td>Daily reply coverage<br><code>valid_replies, eligible_crew_days</code></td><td>5,520 / 7,200 = 76.7% for reporting vessels. Eligible crew-days sum the daily eligible roster counts.</td><td>Validate the reporting cohort and period; roster changes affect the denominator. Replies ≤ eligible crew-days. S01–S02.</td></tr><tr><td>Service reach<br><code>distinct_users, eligible_crew</code></td><td>192 / 240 = 80.0%. Count each eligible crew member once per period.</td><td>Deduplicate within an authorised service-use dataset; do not join named operational files to wellbeing answers. S03.</td></tr><tr><td>Course completion<br><code>assignment_id, due_date, completion_date, status</code></td><td>124 completed by cutoff / 180 assignments due in the period = 68.9%.</td><td>Unique assignment; completion cannot precede assignment. Document cancelled or deferred assignments. S04.</td></tr><tr><td>Activity uptake<br><code>event_id, attended, duty, rest, choice, no_reason</code></td><td>55 / (55 + 15 + 11) = 67.9%. Duty and protected rest excluded from availability.</td><td>One mutually exclusive status per crew-event; counts sum to 144; available = 81. S05.</td></tr><tr><td>Distinct activity reach<br><code>distinct_attendees, eligible_crew</code></td><td>18 / 24 = 75.0%, independent of repeated attendances.</td><td>Deduplicate in a separate authorised attendance register. Never sum event attendances as unique people. S05.</td></tr><tr><td>Feeling / context shares<br><code>category, day_type, valid_reply_count</code></td><td>Category count / valid replies in the same cohort. Port: 220 / 1,664 = 13.2%; sea: 304 / 3,856 = 7.9%.</td><td>Categories sum to 5,520; context groups are mutually exclusive. Suppress unsafe groups; no causal inference. S02.</td></tr></tbody></table></div>
+<details><summary>Field handling and acceptance criteria</summary><div class="detail-body"><ul><li><strong>Dates and scope:</strong> use an agreed vessel reporting-day convention, month and cutoff. Validate that each included source covers the same period.</li><li><strong>Missing and zero:</strong> missing is null / pending. A reported zero is a valid observation. A zero denominator produces “Not applicable”, never 0%.</li><li><strong>Duplicates:</strong> the collection layer should allow one valid check-in per eligible crew-day using an appropriately protected mechanism; retain a documented correction policy. Never claim this aggregate demo proves row-level uniqueness.</li><li><strong>Rounding:</strong> calculate from full counts, then display one decimal. Show numerator and denominator.</li><li><strong>Acceptance examples:</strong> two missing submissions keep completeness at 10/12; their crew-days do not enter reply coverage. A duplicated submission is rejected. A mismatch in the event balance blocks release.</li><li><strong>Disclosure:</strong> run subgroup and inference-risk checks before export. Source provenance and reviewer sign-off remain required.</li></ul></div></details>
+<h3>Illustrative input and evidence register</h3>
+<p class="small">These IDs identify authored example aggregates supplied with this page. The proposed production records below are requirements, not files recovered from a company or integrations already built.</p>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">ID / version</th><th scope="col">Example input</th><th scope="col">Proposed production record / owner</th></tr></thead><tbody><tr><td>S01 · v1 · Sep 2026</td><td>12 expected; 10 reporting; 240 eligible crew; 7,200 crew-days.</td><td>Roster-day totals and submission manifest / reporting analyst.</td></tr><tr><td>S02 · v1 · Sep 2026</td><td>5,520 fleet replies; 540 vessel replies; category and context counts.</td><td>Validated aggregate response extract / authorised data custodian.</td></tr><tr><td>S03 · v1 · Sep 2026</td><td>192 distinct service users / 240 eligible crew.</td><td>Deduplicated usage extract / service reporting owner.</td></tr><tr><td>S04 · v1 · Sep 2026</td><td>124 completed / 180 due assignments.</td><td>Assignment-status extract / learning administrator.</td></tr><tr><td>S05 · v1 · Sep 2026</td><td>Six events; 144 opportunities; 55 attendances; 18 distinct attendees.</td><td>Activity/availability aggregates / designated vessel coordinator.</td></tr><tr><td>A01 · proposed</td><td>ACT-01 and ACT-02 below.</td><td>Action register with due dates and closure evidence / assigned owners.</td></tr></tbody></table></div>
+<h3>Live aggregate checks for this demonstration</h3><div id="validation-results" aria-live="polite"></div>
+<p class="small">These checks run on the fictional aggregates in this page. They do not validate original response rows, real identities, source authenticity, privacy compliance or a production integration.</p>
+<details><summary>Proposed delivery priorities</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Priority</th><th scope="col">Product requirement</th><th scope="col">Acceptance evidence</th></tr></thead><tbody><tr><td>P1</td><td>Correct cohort, missing-data status and metric definitions.</td><td>A missing vessel cannot silently become a zero; exported values reproduce displayed calculations.</td></tr><tr><td>P1</td><td>Disclosure review and source/version traceability.</td><td>Unsafe small groups are suppressed and a release is linked to reviewer approval.</td></tr><tr><td>P2</td><td>Recurring report generation and authorised imports.</td><td>Same validated inputs produce the same versioned report; failed imports are held with actionable errors.</td></tr><tr><td>P2</td><td>Action tracking and feedback.</td><td>Owners can record evidence, reopen unresolved items and feed approved changes into the next reporting version.</td></tr></tbody></table></div></div></details>
+</section>
+<section id="client" class="tab-panel" role="tabpanel" aria-labelledby="tab-client" hidden>
+<span class="eyebrow">06 / CLIENT SUPPORT & IMPROVEMENT</span><h2>Client review pack</h2><p class="section-desc">Example answers for an internal commercial or client-review team. Proposed scope and service capabilities would be confirmed with Lifekeys before use in a live proposal.</p>
+<details><summary>Does this demonstrate MLC compliance?</summary><div class="detail-body"><p>It offers structured supporting evidence about service access, engagement and follow-up. It does not certify a vessel or replace statutory records. Start with the relevant requirement, show the approved service scope, then connect each claim to operator-held evidence and the reporting specification.</p><p class="small">Review references: Compliance support map; S01–S05; operator's applicable records.</p></div></details>
+<details><summary>Why is reply coverage 76.7% when two vessels are missing?</summary><div class="detail-body"><p>The denominator includes 7,200 eligible crew-days from the ten reporting vessels. The two missing submissions remain visible in the separate 10/12 reporting measure. This is a partial view, with follow-up pending; it cannot represent confirmed reply behaviour across all twelve vessels.</p><p class="small">Evidence: S01–S02; ACT-01.</p></div></details>
+<details><summary>Does higher use mean wellbeing has improved?</summary><div class="detail-body"><p>No. Usage, learning completion and attendance measure engagement. An outcome evaluation would need a defined measure, appropriate consent and governance, comparable follow-up periods and review of changes in respondents and operational exposure. Even an observed change would not by itself establish causation.</p></div></details>
+<details><summary>What would a proposal commit to?</summary><div class="detail-body"><p><strong>Proposed deliverable:</strong> a monthly aggregate report showing coverage, service engagement, operational context, evidence references and assigned follow-ups. Agree the eligible population, source systems, metric definitions, privacy controls, review responsibilities and delivery schedule during discovery. Confirm technical feasibility before promising automated imports, clinical results or certification.</p></div></details>
+<h3>Illustrative follow-up register</h3>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Action / owner role</th><th scope="col">Proposed next step</th><th scope="col">Due / closure evidence</th></tr></thead><tbody><tr><td>ACT-01 · reporting analyst</td><td>Request the two missing vessel submissions; record availability and exceptions.</td><td>Before next release decision. Close with accepted source versions or a documented partial-release decision.</td></tr><tr><td>ACT-02 · operator contact</td><td>Assess a second optional activity window with protected duty/rest coverage.</td><td>Before next activity plan. Close with reviewed schedule and next-period aggregate availability/uptake.</td></tr></tbody></table></div>
+<h3>Standards monitoring and change control</h3><p class="small">Public references checked 29 October 2026. Monthly review cadence and the owner roles below are proposals. A change is assessed for applicability before any reporting rule is updated.</p>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Reference / observed status</th><th scope="col">Reporting implication</th><th scope="col">Proposed owner / next step</th></tr></thead><tbody><tr><td><a href='https://www.ilo.org/resource/news/new-important-set-amendments-mlc-2006-will-enter-force-23-december-2024'>MLC 2022 amendments</a><br>Entered into force 23 December 2024.</td><td>Keep social-connectivity access in the recreation review; do not equate an activity count with provision of connectivity.</td><td>Compliance/reporting lead: check flag-state implementation and client scope at onboarding.</td></tr><tr><td><a href='https://www.ilo.org/global/standards/maritime-labour-convention/text/lang--en/index.htm'>MLC 2025 amendments</a><br>Expected entry into force: 23 December 2027.</td><td>Track separately from provisions currently in force; assess future changes before updating client claims.</td><td>Compliance/reporting lead: next source check 29 November 2026, or earlier on an official notice.</td></tr><tr><td><a href='https://www.imo.org/en/ourwork/humanelement/pages/fatigue.aspx'>IMO fatigue guidance</a><br>MSC.1/Circ.1598.</td><td>Keep fatigue education and operational controls distinct from engagement scores.</td><td>Reporting lead + operator: review guidance updates and client feedback monthly.</td></tr></tbody></table></div>
+<details><summary>Example version log and feedback loop</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Version</th><th scope="col">Change</th><th scope="col">Acceptance check</th></tr></thead><tbody><tr><td>0.1 · initial concept</td><td>Fleet and vessel dashboards with illustrative figures.</td><td>Review labels and calculations against the source definitions.</td></tr><tr><td>0.2 · current proposal</td><td>Explicit reporting cohort, complete metric dictionary, aggregate checks, evidence IDs, client Q&A and monitoring.</td><td>Recalculate every headline; verify missing-data treatment, vessel-event totals, keyboard navigation and mobile layout.</td></tr><tr><td>Next revision · proposed</td><td>Collect reviewer/client feedback and prioritise an approved change.</td><td>Record request, rationale, affected fields, owner, test result and reviewer before release.</td></tr></tbody></table></div></div></details>
+<div class="note "><strong>How this builds on my experience</strong><p>The approach draws on shipboard reporting and source cross-checks, linked Excel forms, work/rest coordination and crew activities described in my application. This sample applies that experience to proposed data definitions, quality controls and review workflows for Lifekeys.</p></div>
+</section></div>
+<noscript><style>.tab-panel[hidden]{display:block!important}.tab-panel{display:block;margin-bottom:3rem}.folder-tabs-bar{display:none}</style><p>JavaScript is disabled. Read all sections below the banner; the source counts and calculation examples remain available.</p></noscript>
+</main><footer>Prepared by Aldrin M. Ulep · Independent application work sample<br>Proposal v0.2 · Updated 29 October 2026 · Fictional reporting period: September 2026<br><a href="https://lifekeys.no/career/product-lead-compliance-and-reporting">Role: Product Lead – Compliance & Reporting (Maritime)</a></footer><script>
+'use strict';
+const report = {
+  "period": "2026-09",
+  "version": "0.2",
+  "sourcesVersion": "v1",
+  "fleet": {
+    "expected": 12,
+    "reporting": 10,
+    "missing": 2,
+    "crew": 240,
+    "crewDays": 7200,
+    "replies": 5520,
+    "users": 192,
+    "assignments": 180,
+    "completed": 124
+  },
+  "feelings": [
+    {
+      "label": "Happy / calm",
+      "count": 2296,
+      "color": "#047857"
+    },
+    {
+      "label": "Neutral",
+      "count": 1568,
+      "color": "#0284c7"
+    },
+    {
+      "label": "Sad / low",
+      "count": 760,
+      "color": "#b45309"
+    },
+    {
+      "label": "Angry / frustrated",
+      "count": 524,
+      "color": "#be123c"
+    },
+    {
+      "label": "Anxious / worried",
+      "count": 372,
+      "color": "#7c3aed"
+    }
+  ],
+  "context": {
+    "portReplies": 1664,
+    "portFrustrated": 220,
+    "seaReplies": 3856,
+    "seaFrustrated": 304
+  },
+  "vessel": {
+    "crew": 24,
+    "days": 30,
+    "replies": 540,
+    "events": 6,
+    "attended": 55,
+    "duty": 38,
+    "rest": 25,
+    "choice": 15,
+    "noReason": 11,
+    "distinct": 18
+  }
+};
+function ratio(n,d) {
+ if(n===null||d===null) return null;
+ if(!Number.isFinite(n)||!Number.isFinite(d)||n<0||d<0||n>d) throw new Error('Invalid numerator or denominator');
+ return d===0 ? null : 100*n/d;
+}
+function percent(n,d){if(n===null||d===null)return 'Pending';const value=ratio(n,d);return value===null?'Not applicable':value.toFixed(1)+'%';}
+function validateAggregates(data){
+ const f=data.fleet,v=data.vessel,c=data.context;
+ const categories=data.feelings.reduce((sum,item)=>sum+item.count,0);
+ const opportunityTotal=v.crew*v.events;
+ return [
+ {ok:f.reporting+f.missing===f.expected,label:'Submission manifest balances: reporting + missing = expected.'},
+ {ok:f.replies<=f.crewDays&&f.replies>=0,label:'Valid replies fit within eligible crew-days for the reporting cohort.'},
+ {ok:categories===f.replies,label:'Feeling categories reconcile to the valid-reply total.'},
+ {ok:c.portReplies+c.seaReplies===f.replies&&c.portFrustrated+c.seaFrustrated===data.feelings[3].count,label:'Operational-context groups reconcile to total replies and frustration replies.'},
+ {ok:f.users<=f.crew&&f.users>=0&&f.completed<=f.assignments&&f.completed>=0,label:'Service users and course completions stay within their eligible totals.'},
+ {ok:v.attended+v.duty+v.rest+v.choice+v.noReason===opportunityTotal,label:'All 144 crew-event opportunities are accounted for.'},
+ {ok:v.distinct<=v.crew&&v.distinct<=v.attended&&v.replies<=v.crew*v.days,label:'Distinct attendees and vessel replies fit their eligible totals.'}
+ ];
+}
+function setText(id,text){document.getElementById(id).textContent=text;}
+function renderMetrics(){
+ const f=report.fleet,v=report.vessel;
+ setText('fleet-reporting',percent(f.reporting,f.expected));setText('fleet-replies',percent(f.replies,f.crewDays));
+ setText('fleet-use',percent(f.users,f.crew));setText('fleet-learning',percent(f.completed,f.assignments));
+ setText('vessel-replies',percent(v.replies,v.crew*v.days));setText('vessel-uptake',percent(v.attended,v.attended+v.choice+v.noReason));
+ setText('vessel-unused',percent(v.choice+v.noReason,v.attended+v.choice+v.noReason));setText('vessel-reach',percent(v.distinct,v.crew));
+ const checks=validateAggregates(report);
+ document.getElementById('validation-results').innerHTML='<ul class="check-list">'+checks.map(c=>'<li class="'+(c.ok?'check-pass':'check-fail')+'">'+(c.ok?'PASS':'FAIL')+' · '+c.label+'</li>').join('')+'<li class="check-warn">LIMITATION · Two missing vessels; completeness remains 83.3%. Original-row and privacy reviews are not performed by this demo.</li></ul>';
+ const circumference=2*Math.PI*60;
+ let offset=0;
+ const rings=report.feelings.map(item=>{
+ const length=item.count/report.fleet.replies*circumference;
+ const ring='<circle cx="90" cy="90" r="60" fill="none" stroke="'+item.color+'" stroke-width="24" stroke-dasharray="'+length+' '+(circumference-length)+'" stroke-dashoffset="'+(-offset)+'" transform="rotate(-90 90 90)"/>';offset+=length;return ring;
+ }).join('');
+ document.getElementById('mood-visual').innerHTML='<svg viewBox="0 0 180 180" role="img" aria-labelledby="mood-title"><title id="mood-title">Distribution of 5,520 fictional feeling replies; exact counts appear in the table below.</title>'+rings+'<text x="90" y="87" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">5,520</text><text x="90" y="106" text-anchor="middle" font-size="11" fill="#475569">valid replies</text></svg><ul class="legend">'+report.feelings.map(item=>'<li><span class="swatch" style="background:'+item.color+'"></span>'+item.label+' · '+percent(item.count,report.fleet.replies)+'</li>').join('')+'</ul>';
+}
+function activateTab(button,focus=false){
+ const name=button.dataset.panel;
+ for(const b of document.querySelectorAll('[role="tab"]')){const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;}
+ for(const panel of document.querySelectorAll('[role="tabpanel"]')){const active=panel.id===name;panel.hidden=!active;panel.classList.toggle('active',active);}
+ document.getElementById('immersiveBanner').style.backgroundImage='url("'+button.dataset.image+'")';
+ if(focus)button.focus();
+}
+document.querySelectorAll('[role="tab"]').forEach(button=>{
+ button.addEventListener('click',()=>activateTab(button));
+ button.addEventListener('keydown',event=>{
+ const tabs=[...document.querySelectorAll('[role="tab"]')],idx=tabs.indexOf(button);
+ let target;
+ if(event.key==='ArrowRight')target=(idx+1)%tabs.length;
+ if(event.key==='ArrowLeft')target=(idx+tabs.length-1)%tabs.length;
+ if(event.key==='Home')target=0;
+ if(event.key==='End')target=tabs.length-1;
+ if(target!==undefined){event.preventDefault();activateTab(tabs[target],true);}
+ });
+});
+function inputRows(data){
+ const rows=[['source_id','period','version','scope','field','value','classification']];
+ const add=(id,scope,obj)=>Object.entries(obj).forEach(([key,value])=>rows.push([id,data.period,data.sourcesVersion,scope,key,value===null?'':value,'fictional']));
+ add('S01','reporting_fleet',{expected_vessels:data.fleet.expected,reporting_vessels:data.fleet.reporting,missing_vessels:data.fleet.missing,eligible_crew:data.fleet.crew,eligible_crew_days:data.fleet.crewDays});
+ add('S02','reporting_fleet',{valid_replies:data.fleet.replies,...data.context});
+ data.feelings.forEach(item=>add('S02','reporting_fleet',{[item.label]:item.count}));
+ add('S03','reporting_fleet',{distinct_service_users:data.fleet.users});
+ add('S04','reporting_fleet',{due_assignments:data.fleet.assignments,completed_by_cutoff:data.fleet.completed});
+ add('S02','example_vessel_a',{valid_replies:data.vessel.replies,eligible_crew_days:data.vessel.crew*data.vessel.days});
+ const {replies,days,...activity}=data.vessel;add('S05','example_vessel_a',activity);
+ return rows;
+}
+document.getElementById('download-inputs').addEventListener('click',()=>{
+ const csv=inputRows(report).map(row=>row.map(value=>'"'+String(value).replaceAll('"','""')+'"').join(',')).join('\r\n');
+ const link=document.createElement('a');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ link.href=url;link.download='lifekeys-fictional-inputs-september-2026.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+renderMetrics();
+</script></body></html>
