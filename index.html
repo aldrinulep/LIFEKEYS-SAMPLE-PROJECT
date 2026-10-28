@@ -39,26 +39,35 @@
             padding: 0 1.5rem;
         }
 
-        /* Immersive Top Banner (Photo background behind text + bridge view down to tabs) */
+        /* Grand Immersive Banner (Starts tall with overview.jpg, compresses on click) */
         .immersive-banner {
             width: 100%;
+            height: 520px;
+            background-image: url('overview.jpg');
             background-size: cover;
             background-position: center;
             border-top-left-radius: 16px;
             border-top-right-radius: 16px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
-            transition: background-image 0.6s ease-in-out;
+            transition: height 0.6s ease-in-out, background-image 0.6s ease-in-out;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
-        /* Translucent dark overlay so text and photo both shine through */
+        .immersive-banner.compressed {
+            height: 220px;
+        }
+
+        /* Translucent dark overlay pushing content to bottom */
         .banner-overlay {
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.65) 60%, rgba(15, 23, 42, 0.75));
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.75) 60%, rgba(15, 23, 42, 0.9));
             width: 100%;
-            padding: 3rem 2rem 2.5rem;
+            padding: 2.5rem 2rem 1.5rem;
             text-align: center;
         }
 
@@ -66,43 +75,38 @@
             font-size: 2.4rem;
             font-weight: 700;
             color: white;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.3rem;
             letter-spacing: -0.025em;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
 
         .hero p {
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             color: #cbd5e1;
             max-width: 700px;
             margin: 0 auto;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            text-shadow: 0 1px 6px rgba(0,0,0,0.6);
         }
 
         .author-badge {
             display: inline-block;
-            background: rgba(5, 150, 105, 0.3);
+            background: rgba(5, 150, 105, 0.35);
             color: #34d399;
-            padding: 0.35rem 1rem;
+            padding: 0.3rem 0.9rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 600;
-            margin-top: 0.9rem;
+            margin-top: 0.7rem;
             border: 1px solid rgba(52, 211, 153, 0.4);
             backdrop-filter: blur(6px);
         }
 
         .disclaimer-note {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: #94a3b8;
-            margin-top: 0.4rem;
+            margin-top: 0.3rem;
             font-style: italic;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-        }
-
-        /* Spacer view area inside banner to showcase bridge/containers nicely */
-        .banner-view-spacer {
-            height: 110px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
 
         /* Prompt Text pointing down */
@@ -111,9 +115,18 @@
             color: #e2e8f0;
             font-weight: 600;
             font-size: 0.9rem;
-            margin-bottom: 0.75rem;
+            margin: 0.75rem 0 0.5rem;
             letter-spacing: 0.02em;
             text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        .prompt-box.hidden {
+            opacity: 0;
+            pointer-events: none;
+            height: 0;
+            margin: 0;
+            overflow: hidden;
         }
 
         /* Evenly Distributed Tabs Bar */
@@ -121,7 +134,7 @@
             display: flex;
             width: 100%;
             gap: 0.4rem;
-            background: rgba(15, 23, 42, 0.75);
+            background: rgba(15, 23, 42, 0.85);
             padding: 0.4rem 0.4rem 0;
         }
 
@@ -352,8 +365,8 @@
     <!-- Main Content Layout -->
     <main class="main-container">
         
-        <!-- Immersive Top Banner with Dynamic Background Photo -->
-        <div id="immersiveBanner" class="immersive-banner" style="background-image: url('fleet.jpg');">
+        <!-- Grand Immersive Banner (Loads overview.jpg grandly, compresses on click) -->
+        <div id="immersiveBanner" class="immersive-banner">
             <div class="banner-overlay">
                 <header class="hero">
                     <h1>Lifekeys Maritime Fleet Wellbeing</h1>
@@ -361,11 +374,10 @@
                     <div class="author-badge">Independent Maritime Work Sample by Aldrin M. Ulep</div>
                     <div class="disclaimer-note">Not an official Lifekeys product. All illustrative data is fictional.</div>
                 </header>
-                <div class="banner-view-spacer"></div>
             </div>
         </div>
 
-        <!-- Prompt Text -->
+        <!-- Prompt Text (Disappears on first click) -->
         <div class="prompt-box" id="promptBox">
             👇 Select any tab below to inspect executive reports and metrics
         </div>
@@ -612,14 +624,19 @@
         Lifekeys Maritime Fleet Wellbeing Portal — Designed for Executive Review & Client Compliance Audits | Report compiled by Aldrin M. Ulep (Independent Work Sample)
     </footer>
 
-    <!-- JavaScript for Tab Switching, Banner Photo Updates, and Charts -->
+    <!-- JavaScript for Tab Switching, Compressing Banner, Hiding Prompt, and Charts -->
     <script>
         function switchTab(evt, tabName, bgImage) {
-            // Update the immersive banner background photo dynamically
+            // Compress grand banner and update its background photo
             const banner = document.getElementById('immersiveBanner');
+            banner.classList.add('compressed');
             banner.style.backgroundImage = `url("${bgImage}")`;
 
-            // Open the solid white report container below tabs
+            // Hide prompt box permanently after first click
+            const prompt = document.getElementById('promptBox');
+            prompt.classList.add('hidden');
+
+            // Open solid white report container below tabs
             const reportContainer = document.getElementById('reportContainer');
             reportContainer.classList.add('active');
 
