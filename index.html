@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifekeys Maritime — Fleet Wellbeing & Compliance Report (September 2026)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #0284c7;
+            --ocean-blue: #0f172a;
+            --lifekeys-green: #059669;
+            --green-light: rgba(5, 150, 105, 0.1);
+            --slate-gray: #475569;
+            --folder-border: rgba(203, 213, 225, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: var(--ocean-blue);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Dynamic Background Container that switches per tab */
+        #page-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.6s ease-in-out;
+            z-index: -2;
+        }
+
+        /* Dark editorial gradient overlay */
+        #page-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.8));
+            z-index: -1;
+        }
+
+        /* Header / Hero Section */
+        .hero {
+            color: white;
+            padding: 3.5rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        }
+
+        .author-badge {
+            display: inline-block;
+            background: rgba(5, 150, 105, 0.3);
+            color: #34d399;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            backdrop-filter: blur(8px);
+        }
+
+        .disclaimer-note {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.4rem;
+            font-style: italic;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 1.5rem auto 4rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .folder-wrapper {
+            background: transparent;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* Folder Tabs Navigation (Evenly Distributed & ~50% Opacity) */
+        .folder-tabs-bar {
+            display: flex;
+            width: 100%;
+            background: rgba(241, 245, 249, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.5rem 0.5rem 0;
+            gap: 0.5rem;
+            border-bottom: 2px solid rgba(203, 213, 225, 0.4);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        .folder-tab {
+            flex: 1;
+            padding: 0.85rem 0.5rem;
+            background: rgba(226, 232, 240, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--folder-border);
+            border-bottom: none;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.4);
+        }
+
+        .folder-tab:hover {
+            background: rgba(203, 213, 225, 0.65);
+            color: var(--ocean-blue);
+        }
+
+        .folder-tab.active {
+            background: #ffffff;
+            color: var(--lifekeys-green);
+            border-color: rgba(203, 213, 225, 0.9);
+            border-bottom: 2px solid #ffffff;
+            margin-bottom: -2px;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            text-shadow: none;
+        }
+
+        /* Folder Content Panels (Starts Blank/Hidden, Turns Solid White when active) */
+        .folder-content {
+            padding: 0;
+            background: transparent;
+            min-height: 100px;
+            transition: background 0.3s ease, padding 0.3s ease;
+        }
+
+        .folder-content.active-content {
+            padding: 2.5rem;
+            background: #ffffff;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Initial Blank Prompt State */
+        .initial-prompt {
+            text-align: center;
+            color: white;
+            padding: 4rem 1rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .initial-prompt h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        /* Dashboard Grid & Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--lifekeys-green);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--ocean-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--slate-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        /* Section Headings */
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ocean-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: var(--slate-gray);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 340px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Tables & Lists */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--ocean-blue);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Compliance Matrix */
+        .compliance-card {
+            background: #f8fafc;
+            border-left: 4px solid var(--sky-blue);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .compliance-card h4 {
+            font-size: 1rem;
+            color: var(--ocean-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .compliance-card p {
+            font-size: 0.85rem;
+            color: var(--slate-gray);
+        }
+
+        .badge-mlc {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.9);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Background Image Layer (Defaults to fleet.jpg) -->
+    <div id="page-background" style="background-image: url('fleet.jpg');"></div>
+
+    <!-- Header / Hero Section -->
+    <header class="hero">
+        <h1>Lifekeys Maritime Fleet Wellbeing</h1>
+        <p>Executive Client Intelligence Portal — September 2026 Portfolio Review</p>
+        <div class="author-badge">Independent Maritime Work Sample by Aldrin M. Ulep</div>
+        <div class="disclaimer-note">Not an official Lifekeys product. All illustrative data is fictional.</div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <div class="folder-wrapper">
+            
+            <!-- Folder Tabs Navigation (Evenly Distributed & ~50% Opacity) -->
+            <div class="folder-tabs-bar">
+                <button class="folder-tab" onclick="switchTab(event, 'fleet', 'fleet.jpg')">
+                    📁 Fleet Overview
+                </button>
+                <button class="folder-tab" onclick="switchTab(event, 'vessel', 'vessel.jpg')">
+                    🚢 Example Vessel A
+                </button>
+                <button class="folder-tab" onclick="switchTab(event, 'compliance', 'compliance.jpg')">
+                    ⚖️ Compliance & Regulatory
+                </button>
+                <button class="folder-tab" onclick="switchTab(event, 'governance', 'governance.jpg')">
+                    🔒 Data Governance & Privacy
+                </button>
+            </div>
+
+            <!-- Tab Content Area (Starts Blank, Turns Solid White on Click) -->
+            <div id="folderContentArea" class="folder-content">
+                
+                <!-- Initial Prompt Message before any tab is clicked -->
+                <div id="initialPrompt" class="initial-prompt">
+                    <h3>👆 Select any tab above to inspect executive reports and metrics</h3>
+                </div>
+
+                <!-- 1. FLEET OVERVIEW TAB -->
+                <div id="fleet" class="tab-panel">
+                    <h2>Fleet-Wide Wellbeing Summary</h2>
+                    <p class="section-desc">Portfolio snapshot across 12 illustrative vessels for September 2026. Highlighting submission rates, engagement, and operational sentiment drivers.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">83.3%</div>
+                            <div class="stat-label">Vessel Check-In Rate</div>
+                            <div class="stat-sub">10 of 12 vessels reporting</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">76.7%</div>
+                            <div class="stat-label">Daily Reply Coverage</div>
+                            <div class="stat-sub">5,520 replies / 7,200 crew-days (Reporting vessels only)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">80.0%</div>
+                            <div class="stat-label">Service Use</div>
+                            <div class="stat-sub">192 / 240 crew (Reporting vessels)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">68.9%</div>
+                            <div class="stat-label">Module Completion</div>
+                            <div class="stat-sub">124 / 180 assigned courses</div>
+                        </div>
+                    </div>
+
+                    <!-- Calculation Rules Box -->
+                    <div style="background: #f8fafc; padding: 1.25rem; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 2rem;">
+                        <h4 style="font-size: 0.95rem; color: var(--ocean-blue); margin-bottom: 0.5rem;">📊 Report Fields & Calculation Rules</h4>
+                        <p style="font-size: 0.85rem; color: var(--slate-gray); margin-bottom: 0.5rem;">
+                            <strong>Coverage Rule:</strong> Valid daily replies divided by eligible crew-days from roster (reconciled for reporting vessels prior to release).<br>
+                            <strong>Outcome Note:</strong> Baseline month data; no proven clinical improvement or long-term behavioral outcome is established in this illustrative sample.
+                        </p>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="chart-box">
+                            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Reported Mood Distribution</h3>
+                            <canvas id="moodChart" style="max-height: 250px;"></canvas>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Operational Context Analysis</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Condition</th>
+                                        <th>Frustration Share</th>
+                                        <th>Key Observation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Port / Transition Days</strong></td>
+                                        <td><span style="color: #e11d48; font-weight: 600;">13.2%</span></td>
+                                        <td>Frustration replies were more common on port days; this association does not establish a cause.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sea-Only Days</strong></td>
+                                        <td><span style="color: #059669; font-weight: 600;">7.9%</span></td>
+                                        <td>Stable routines during ocean transits.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Missing Submissions</strong></td>
+                                        <td>2 Vessels</td>
+                                        <td>Reconciled and followed up by shore analyst prior to release.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. INDIVIDUAL VESSEL TAB -->
+                <div id="vessel" class="tab-panel">
+                    <h2>Vessel Deep-Dive: Example Vessel A</h2>
+                    <p class="section-desc">Detailed activity uptake, rest constraints, and participation barriers for September 2026 (24 crew on board, 18 active participants).</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">75.0%</div>
+                            <div class="stat-label">Check-In Coverage</div>
+                            <div class="stat-sub">540 replies / 720 eligible crew-days</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">67.9%</div>
+                            <div class="stat-label">Event Attendance Rate</div>
+                            <div class="stat-sub">55 attended / 81 available opportunities</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">32.1%</div>
+                            <div class="stat-label">Missed Opportunities</div>
+                            <div class="stat-sub">26 available slots went unused</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Reasons for Missed Opportunities (89 Instances)</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Reason Category</th>
+                                        <th>Share</th>
+                                        <th>Instances</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>On Duty / Watchkeeping</td>
+                                        <td>42.7%</td>
+                                        <td>38</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Protected Rest / Fatigue</td>
+                                        <td>28.1%</td>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Personal Choice</td>
+                                        <td>16.9%</td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No Reason Given</td>
+                                        <td>12.4%</td>
+                                        <td>11</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="chart-box">
+                            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--ocean-blue);">Missed Activity Breakdown</h3>
+                            <canvas id="missedChart" style="max-height: 250px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. COMPLIANCE & REGULATORY TAB -->
+                <div id="compliance" class="tab-panel">
+                    <h2>Regulatory & Compliance Alignment</h2>
+                    <p class="section-desc">Mapping Lifekeys support metrics directly to International Labour Organization (ILO) Maritime Labour Convention (MLC) 2006 standards and IMO frameworks.</p>
+
+                    <div class="grid-2">
+                        <div>
+                            <div class="compliance-card">
+                                <span class="badge-mlc">MLC A2.3 / STCW A-VIII/1</span>
+                                <h4>Rest and Fatigue Management</h4>
+                                <p><strong>Support:</strong> Fatigue education & aggregate context.<br><strong>Evidence:</strong> Work/rest breach logs, circumstances, Chief Officer review logs.</p>
+                            </div>
+                            <div class="compliance-card">
+                                <span class="badge-mlc">MLC A4.3(1)(a) / ISO 45003</span>
+                                <h4>Safety and Psychosocial Risk</h4>
+                                <p><strong>Support:</strong> Organizational surveys & awareness.<br><strong>Evidence:</strong> SMS risk records, mitigation controls, and designated owner follow-up.</p>
+                            </div>
+                            <div class="compliance-card">
+                                <span class="badge-mlc">MLC A3.1(17)</span>
+                                <h4>Recreation & Connection</h4>
+                                <p><strong>Support:</strong> Activity planning and participation tracking.<br><strong>Evidence:</strong> Dated events, distinct participants, duty/rest availability logs.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="compliance-card">
+                                <span class="badge-mlc">MLC A4.1</span>
+                                <h4>Professional Support</h4>
+                                <p><strong>Support:</strong> Psychological support and confidential referral routes.<br><strong>Evidence:</strong> Current access channels and incident follow-up (excluding clinical details).</p>
+                            </div>
+                            <div class="compliance-card">
+                                <span class="badge-mlc">MLC A5.1.5</span>
+                                <h4>Protected Reporting</h4>
+                                <p><strong>Support:</strong> Awareness of onboard grievance channels.<br><strong>Evidence:</strong> Complaint procedures and communication records (check-ins ≠ complaint channels).</p>
+                            </div>
+                            <div class="compliance-card" style="border-left-color: var(--slate-gray);">
+                                <span class="badge-mlc" style="background: #f1f5f9; color: var(--slate-gray);">Referenced Only (Outside Scope)</span>
+                                <h4>Living & Employment Conditions</h4>
+                                <p><strong>Support:</strong> Flag aggregate feedback to responsible shore teams.<br><strong>Evidence:</strong> Accommodation, catering, and employment action tracking records. Note: Lifekeys does not certify living conditions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. DATA GOVERNANCE & PRIVACY TAB -->
+                <div id="governance" class="tab-panel">
+                    <h2>Data Governance & Privacy Safeguards</h2>
+                    <p class="section-desc">Built upon Department of Information and Communications Technology (DICT) Privacy Impact Assessment training and data governance standards.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card" style="border-left-color: var(--sky-blue);">
+                            <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Data Isolation</div>
+                            <div class="stat-label">Wellbeing vs. Personnel Files</div>
+                            <div class="stat-sub">Reduces risk by keeping voluntary check-ins separate from named work records</div>
+                        </div>
+                        <div class="stat-card" style="border-left-color: var(--sky-blue);">
+                            <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Anonymity Thresholds</div>
+                            <div class="stat-label">Small Group Suppression</div>
+                            <div class="stat-sub">Reduces risk of individual identification in small vessel cohorts</div>
+                        </div>
+                        <div class="stat-card" style="border-left-color: var(--sky-blue);">
+                            <div class="stat-value" style="font-size: 1.25rem; margin-top: 0.5rem;">Traceable Source ID</div>
+                            <div class="stat-label">Defined Calculations</div>
+                            <div class="stat-sub">Metrics tied to documented source data versions, review dates, and IDs</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--ocean-blue); margin-bottom: 0.75rem;">Review Workflow & Action Ownership</h3>
+                        <p style="font-size: 0.9rem; color: var(--slate-gray); margin-bottom: 1rem;">To maintain data integrity before executive client release, the following protocol is enforced:</p>
+                        <ul style="margin-left: 1.5rem; font-size: 0.9rem; color: var(--ocean-blue); display: flex; flex-direction: column; gap: 0.5rem;">
+                            <li><strong>Shore Analyst Verification:</strong> Reconcile missing vessel data prior to calculating fleet-wide averages.</li>
+                            <li><strong>Chief Officer Review:</strong> Evaluate port-call workload associations before subsequent close-call berthing sequences.</li>
+                            <li><strong>Action Tracking:</strong> Assign unique Action IDs, owners, due dates, and closure evidence for all identified follow-ups.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Lifekeys Maritime Fleet Wellbeing Portal — Designed for Executive Review & Client Compliance Audits | Report compiled by Aldrin M. Ulep (Independent Work Sample)
+    </footer>
+
+    <!-- JavaScript for Tab Switching, Background Swapping, and Charts -->
+    <script>
+        function switchTab(evt, tabName, bgImage) {
+            // Hide initial prompt
+            const prompt = document.getElementById('initialPrompt');
+            if (prompt) {
+                prompt.style.display = 'none';
+            }
+
+            // Turn content area solid white and add padding
+            const contentArea = document.getElementById('folderContentArea');
+            contentArea.classList.add('active-content');
+
+            // Switch tab content panels
+            const panels = document.getElementsByClassName('tab-panel');
+            for (let p of panels) {
+                p.classList.remove('active');
+            }
+
+            const tabs = document.getElementsByClassName('folder-tab');
+            for (let t of tabs) {
+                t.classList.remove('active');
+            }
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+
+            // Switch background image dynamically with smooth fade
+            const bgElement = document.getElementById('page-background');
+            bgElement.style.backgroundImage = `url("${bgImage}")`;
+        }
+
+        // Initialize Mood Distribution Chart
+        const ctxMood = document.getElementById('moodChart').getContext('2d');
+        new Chart(ctxMood, {
+            type: 'doughnut',
+            data: {
+                labels: ['Happy / Calm (41.6%)', 'Neutral (28.4%)', 'Sad / Low (13.8%)', 'Angry / Frustrated (9.5%)', 'Anxious / Worried (6.7%)'],
+                datasets: [{
+                    data: [41.6, 28.4, 13.8, 9.5, 6.7],
+                    backgroundColor: ['#059669', '#38bdf8', '#f59e0b', '#ef4444', '#8b5cf6'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        // Initialize Missed Opportunities Chart
+        const ctxMissed = document.getElementById('missedChart').getContext('2d');
+        new Chart(ctxMissed, {
+            type: 'bar',
+            data: {
+                labels: ['On Duty', 'Protected Rest', 'Personal Choice', 'No Reason Given'],
+                datasets: [{
+                    label: 'Missed Instances',
+                    data: [38, 25, 15, 11],
+                    backgroundColor: '#0284c7',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { display: false } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
