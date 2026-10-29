@@ -169,10 +169,49 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
  *{animation:none!important;transition:none!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 
+
+/* Approved palette: each adjacent pair shares its fill, text and accent. */
+.tab-blue{--tab-fill:#DFEAF5;--tab-ink:#254864;--tab-accent:#2F5F83}
+.tab-green{--tab-fill:#E3EFE8;--tab-ink:#234F3D;--tab-accent:#357558}
+.tab-sand{--tab-fill:#F1EADD;--tab-ink:#655132;--tab-accent:#876E43}
+.folder-tab{background:var(--tab-fill);color:var(--tab-ink);border-color:var(--tab-fill)}
+.folder-tab:before{content:'';position:absolute;top:0;left:18px;right:18px;height:3px;background:var(--tab-accent);border-radius:0 0 3px 3px}
+.folder-tab:hover{background:#fff;color:var(--tab-ink)}
+.folder-tab[aria-selected="true"]{background:#fff;color:var(--tab-ink);font-weight:700}
+.folder-tab[aria-selected="true"]:before{height:5px;background:var(--tab-accent)}
+.prompt-box{padding:8px 12px;font-size:.8rem}
+.guide-line{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:0 7px;line-height:1.5}
+.guide-line strong{font-weight:600;color:#fff}
+.guide-link{border:0;background:transparent;padding:10px 3px;min-height:44px;cursor:pointer;font-size:inherit;line-height:1.5;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.guide-green{color:#C6E4D4}.guide-blue{color:#C8DFF4}.guide-link:hover{color:#fff}
+.stats-grid.service-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.print-running-footer{display:none}
+@media(max-width:768px){.prompt-box{padding:9px 6px;font-size:.7rem}.guide-line{gap:0 4px}.guide-link{padding:8px 1px}.guide-line strong{flex-basis:100%;margin-top:3px}.stats-grid.service-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.option-status{white-space:normal;max-width:90px;text-align:right}}
+@media(max-width:359px){.stats-grid.service-stats{grid-template-columns:minmax(0,1fr)}}
+@media print{
+ @page{size:A4 portrait;margin:14mm 14mm 25mm}
+ .print-running-footer{display:block;position:fixed;bottom:0;left:0;right:0;height:13mm;border-top:1px solid #94a3b8;padding-top:3mm;color:#334155;background:white;font-size:7.5pt;line-height:1.4;z-index:20}
+ .has-print-margin-boxes .print-running-footer{display:none}
+ .print-running-footer span{display:block}.print-running-footer strong{font-weight:700}
+ .stats-grid.service-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #vessel .grid-2{display:grid;grid-template-columns:1.25fr 1fr;gap:12pt;align-items:start;break-inside:avoid}
+ #vessel .grid-2>div{margin-bottom:0}
+ .option-status{white-space:normal}
+}
+
+</style>
+<style id="print-margins">
+@page{
+ @bottom-center{
+  content:"Fictional Data · Not an Official Lifekeys Product · Proposal v0.5 · Sources v3\A Issued 29 October 2026 · Reporting Period: September 2026\A Page " counter(page) " of " counter(pages);
+  white-space:pre-line;font-family:Arial,sans-serif;font-size:8pt;line-height:1.5;color:#334155;text-align:center;vertical-align:middle;
+ }
+}
 </style>
 </head>
 <body>
 <a id="skip-to-report" class="skip-link" href="#reportContainer">Skip to Reports</a>
+<div class="print-running-footer" aria-hidden="true"><span><strong>Fictional Data</strong> · Not an Official Lifekeys Product · Proposal v0.5 · Sources v3</span><span>Issued 29 October 2026 · Reporting Period: September 2026 · <span id="print-footer-label" style="display:inline"></span></span></div>
 <main class="main-container">
 <div id="dashboardShell" class="dashboard-shell">
 <div id="immersiveBanner" class="immersive-banner" data-current-photo="overview.jpg">
@@ -187,31 +226,34 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
  </header>
 </div>
 <div class="tab-dock">
- <p id="promptBox" class="prompt-box">👇 Select any tab below to inspect executive reports and metrics</p>
+ <div id="promptBox" class="prompt-box" aria-label="Suggested Reading Order">
+ <p id="start-guide" class="guide-line"><strong>Start Here:</strong> <button type="button" class="guide-link guide-green" data-open-report="specification">Reporting Specification</button><span aria-hidden="true">→</span><button type="button" class="guide-link guide-green" data-open-report="compliance">Compliance Support Map</button></p>
+ <p id="explore-guide" class="guide-line"><strong>Explore:</strong> <button type="button" class="guide-link guide-blue" data-open-report="fleet">Fleet Overview</button><span aria-hidden="true">→</span><button type="button" class="guide-link guide-blue" data-open-report="vessel">Vessel Reports</button></p>
+</div>
  <nav class="folder-tabs-bar" role="tablist" aria-label="Report Sections">
-<button class="folder-tab" id="tab-fleet" role="tab" aria-controls="fleet" aria-selected="false" tabindex="0" data-panel="fleet" data-image="fleet.jpg">Fleet Overview</button>
-<button class="folder-tab" id="tab-vessel" role="tab" aria-controls="vessel" aria-selected="false" tabindex="-1" data-panel="vessel" data-image="vessel.jpg">Vessel Reports</button>
-<button class="folder-tab" id="tab-compliance" role="tab" aria-controls="compliance" aria-selected="false" tabindex="-1" data-panel="compliance" data-image="compliance.jpg">Compliance & Regulatory</button>
-<button class="folder-tab" id="tab-governance" role="tab" aria-controls="governance" aria-selected="false" tabindex="-1" data-panel="governance" data-image="governance.jpg">Data Governance & Privacy</button>
-<button class="folder-tab" id="tab-specification" role="tab" aria-controls="specification" aria-selected="false" tabindex="-1" data-panel="specification" data-image="reporting.jpg">Reporting Specification</button>
-<button class="folder-tab" id="tab-client" role="tab" aria-controls="client" aria-selected="false" tabindex="-1" data-panel="client" data-image="client.jpeg">Client & Improvement</button>
- </nav>
+<button class="folder-tab tab-blue" id="tab-fleet" role="tab" aria-controls="fleet" aria-selected="false" tabindex="0" data-panel="fleet" data-image="fleet.jpg">Fleet Overview</button>
+<button class="folder-tab tab-blue" id="tab-vessel" role="tab" aria-controls="vessel" aria-selected="false" tabindex="-1" data-panel="vessel" data-image="vessel.jpg">Vessel Reports</button>
+<button class="folder-tab tab-green" id="tab-compliance" role="tab" aria-controls="compliance" aria-selected="false" tabindex="-1" data-panel="compliance" data-image="compliance.jpg">Compliance & Regulatory</button>
+<button class="folder-tab tab-green" id="tab-specification" role="tab" aria-controls="specification" aria-selected="false" tabindex="-1" data-panel="specification" data-image="reporting.jpg">Reporting Specification</button>
+<button class="folder-tab tab-sand" id="tab-governance" role="tab" aria-controls="governance" aria-selected="false" tabindex="-1" data-panel="governance" data-image="governance.jpg">Data Governance & Privacy</button>
+<button class="folder-tab tab-sand" id="tab-client" role="tab" aria-controls="client" aria-selected="false" tabindex="-1" data-panel="client" data-image="client.jpeg">Client & Improvement</button>
+</nav>
 </div>
 <div id="reportContainer" class="report-container" tabindex="-1" hidden>
-<header class="print-heading"><strong>Lifekeys Maritime Fleet Wellbeing</strong><p>Independent Work Sample · Aldrin M. Ulep · Proposal v0.4</p><p>September 2026 · All Report Data Is Fictional · Not an Official Lifekeys Product</p><p id="print-report-label"></p></header>
+<header class="print-heading"><strong>Lifekeys Maritime Fleet Wellbeing</strong><p>Independent Work Sample · Aldrin M. Ulep · Proposal v0.5</p><p>September 2026 · All Report Data Is Fictional · Not an Official Lifekeys Product</p><p>Issued 29 October 2026 · <span id="print-report-label"></span></p></header>
 <section id="fleet" class="tab-panel" role="tabpanel" aria-labelledby="tab-fleet" hidden>
 <div class="section-top"><div><span class="eyebrow">01 / CLIENT REPORT</span><h2>Fleet Overview</h2></div><span class="status amber">Partial coverage · 10 of 12 vessels</span></div>
 <p class="section-desc">September 2026 · Fictional portfolio of 12 vessels. The two missing submissions are excluded from usage and reply denominators; they remain visible in the reporting-completeness measure.</p>
 <div class="report-toolbar fleet-toolbar no-print"><div class="report-actions" aria-label="Fleet report actions">
  <button type="button" class="action-button" data-export-report="fleet"><span aria-hidden="true">↓</span> Export PDF</button>
  <a class="action-button secondary email-report" id="email-fleet" href="mailto:" data-scope="fleet"><span aria-hidden="true">✉</span> Send Email</a>
-</div></div><p class="share-help no-print">PDF opens the print dialog: choose <strong>Save as PDF</strong>. Email opens a draft with the report summary; attach the saved PDF if needed.</p>
-<div class="stats-grid"><div class="stat-card"><div class="stat-value" id="fleet-reporting">—</div><div class="stat-label">Vessels reporting</div><div class="stat-sub">10 / 12 expected vessels · S01</div></div><div class="stat-card"><div class="stat-value" id="fleet-replies">—</div><div class="stat-label">Daily reply coverage</div><div class="stat-sub">5,520 / 7,200 eligible crew-days · S01–S02</div></div><div class="stat-card"><div class="stat-value" id="fleet-use">—</div><div class="stat-label">Service reach</div><div class="stat-sub">192 / 240 eligible crew · S03</div></div><div class="stat-card"><div class="stat-value" id="fleet-learning">—</div><div class="stat-label">Course completion</div><div class="stat-sub">124 / 180 due assignments · S04</div></div></div>
+</div></div><p class="share-help no-print">PDF opens the print dialog: choose <strong>Save as PDF</strong>. Export does not upload report data to a conversion service. Email opens a draft with the report summary and website link; attach the saved PDF if needed.</p>
+<div class="stats-grid"><div class="stat-card"><div class="stat-value" id="fleet-reporting">—</div><div class="stat-label">Vessels reporting</div><div class="stat-sub" id="fleet-reporting-count">10 / 12 expected vessels · S01</div></div><div class="stat-card"><div class="stat-value" id="fleet-replies">—</div><div class="stat-label">Daily reply coverage</div><div class="stat-sub" id="fleet-replies-count">5,520 / 7,200 eligible crew-days · S01–S02</div></div><div class="stat-card"><div class="stat-value" id="fleet-use">—</div><div class="stat-label">Service reach</div><div class="stat-sub" id="fleet-use-count">192 / 240 eligible crew · S03</div></div><div class="stat-card"><div class="stat-value" id="fleet-learning">—</div><div class="stat-label">Course completion</div><div class="stat-sub" id="fleet-learning-count">124 / 180 due assignments · S04</div></div></div>
 <div class="note info"><strong>What a client can conclude</strong><p>The sample describes access, service use and engagement among reporting vessels. It establishes a baseline; no clinical improvement, reduced fatigue or causal effect is demonstrated. The portfolio picture remains incomplete.</p></div>
 <div class="grid-2"><div class="chart-box"><h3>Reported Feelings</h3><div class="chart-frame doughnut-frame"><canvas id="moodChart" role="img" aria-label="Distribution of 5,520 fictional feeling replies. Exact counts are available below."></canvas></div><ul id="mood-legend" class="legend"></ul><p class="chart-fallback small" id="mood-fallback">Exact figures are available in “Inspect the counts behind the feelings chart”.</p></div><div><h3>Operational Context</h3>
-<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Day category</th><th scope="col">Frustration replies</th><th scope="col">Interpretation</th></tr></thead><tbody><tr><td>Port / transition</td><td>220 / 1,664 · 13.2%</td><td>Higher share among submitted replies; does not establish cause.</td></tr><tr><td>Sea-only</td><td>304 / 3,856 · 7.9%</td><td>Lower share among submitted replies; does not prove stable routines.</td></tr><tr><td>Missing vessels</td><td>2 / 12</td><td>Follow-up pending in this example; no assumed zero replies.</td></tr></tbody></table></div>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Day category</th><th scope="col">Frustration replies</th><th scope="col">Interpretation</th></tr></thead><tbody id="fleet-context-rows"></tbody></table></div>
 <p class="small">S02 contains fictional aggregate counts. Repeat replies from the same crew member are possible; these are reply shares, not the prevalence of distress among individuals.</p></div></div>
-<details><summary>Inspect the counts behind the feelings chart</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Response category</th><th scope="col">Replies</th><th scope="col">Share</th></tr></thead><tbody><tr><td>Happy / calm</td><td>2,296</td><td>41.6%</td></tr><tr><td>Neutral</td><td>1,568</td><td>28.4%</td></tr><tr><td>Sad / low</td><td>760</td><td>13.8%</td></tr><tr><td>Angry / frustrated</td><td>524</td><td>9.5%</td></tr><tr><td>Anxious / worried</td><td>372</td><td>6.7%</td></tr></tbody></table></div><p class='small'>Total: 5,520 valid replies. Percentages use unrounded counts and display one decimal place. Rounding can affect displayed totals.</p></div></details>
+<details><summary>Inspect the counts behind the feelings chart</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Response category</th><th scope="col">Replies</th><th scope="col">Share</th></tr></thead><tbody id="fleet-feeling-rows"></tbody></table></div><p class="small" id="fleet-feeling-total"></p></div></details>
 <div class="note "><strong>Client follow-up</strong><p>Confirm missing submissions with the two vessel contacts. Review access barriers and duty/rest constraints with the appropriate operational owners. Do not infer individual wellbeing from the charts.</p></div>
 </section>
 <section id="vessel" class="tab-panel" role="tabpanel" aria-labelledby="tab-vessel" hidden>
@@ -221,14 +263,14 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
   <label for="vessel-search">Search Vessel</label>
   <div class="search-field"><span aria-hidden="true">⌕</span><input id="vessel-search" type="search" role="combobox" aria-autocomplete="list" aria-controls="vessel-options" aria-expanded="false" aria-describedby="vessel-search-help" autocomplete="off" spellcheck="false" placeholder="Search by Vessel Name or Code"><button id="browse-vessels" type="button" aria-label="Show All Vessels" aria-controls="vessel-options" aria-expanded="false">⌄</button></div>
   <div id="vessel-options" class="vessel-options" role="listbox" aria-label="Matching Vessels" hidden></div>
-  <p id="vessel-search-help" class="small">12 Fictional Vessels · 10 Reporting · 2 Awaiting Data</p>
+  <p id="vessel-search-help" class="small">12 Fictional Vessels · 10 Reporting · 2 Without Submissions</p>
  </div>
 <div class="report-actions" aria-label="Vessel report actions">
  <button type="button" class="action-button" data-export-report="vessel"><span aria-hidden="true">↓</span> Export PDF</button>
  <a class="action-button secondary email-report" id="email-vessel" href="mailto:" data-scope="vessel"><span aria-hidden="true">✉</span> Send Email</a>
 </div>
 </div>
-<p class="share-help no-print">PDF opens the print dialog: choose <strong>Save as PDF</strong>. Email opens a draft with the report summary; attach the saved PDF if needed.</p>
+<p class="share-help no-print">PDF opens the print dialog: choose <strong>Save as PDF</strong>. Export does not upload report data to a conversion service. Email opens a draft with the report summary and website link; attach the saved PDF if needed.</p>
 <div id="vessel-report-content"></div>
 <p id="vessel-search-status" class="visually-hidden" role="status" aria-live="polite"></p>
 </section>
@@ -239,24 +281,24 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
 <div class="note "><strong>Outside this proposal</strong><p>Accommodation inspections, catering, employment agreements and statutory certification remain outside the proposed reporting service. Relevant feedback would be routed to the responsible operator team.</p></div>
 <p class="small">References reviewed 29 October 2026. The links identify public sources; the mapping is an independent proposed interpretation for discussion with Lifekeys and the client.</p>
 </section>
-<section id="governance" class="tab-panel" role="tabpanel" aria-labelledby="tab-governance" hidden>
-<span class="eyebrow">04 / GOVERNANCE BY DESIGN</span><h2>Privacy and Review Controls</h2><p class="section-desc">Proposed safeguards informed by my DICT Privacy Impact Assessment and Data Privacy training. Production decisions require an agreed purpose, lawful basis, responsibilities and retention schedule.</p>
-<div class="grid-2"><div class="note "><strong>Separate datasets</strong><p>Voluntary wellbeing responses would be kept separate from named work/rest and personnel records. Client reports would receive approved aggregates. Clinical content and individual support histories would not appear in these reports.</p></div><div class="note "><strong>Limit small-group disclosure</strong><p>Proposed starting rule: suppress a subgroup below five distinct contributors. Also assess rare categories, totals that reveal a hidden cell, repeated reports and combined filters. Five is a design assumption for review, not a legal guarantee of anonymity.</p></div><div class="note "><strong>Define access and retention</strong><p>An analyst prepares aggregates; a designated reviewer approves releases; clients receive the agreed report. Retention and deletion rules would be defined per dataset before live collection, with access logged and periodically reviewed.</p></div><div class="note "><strong>Protect voluntary participation</strong><p>Non-response and choosing not to attend would not be treated as poor performance. Self-reported feelings are not clinical assessments. Existing support and complaint routes must remain clear and accessible.</p></div></div>
-<h3>Proposed Release Workflow</h3>
-<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Stage</th><th scope="col">Owner role</th><th scope="col">Required evidence</th></tr></thead><tbody><tr><td>Validate inputs</td><td>Reporting analyst</td><td>Source IDs, date range, duplicates check, roster denominator and reconciled totals.</td></tr><tr><td>Review operational context</td><td>Designated operator contact</td><td>Confirmation of duty/rest definitions and aggregate access barriers; no individual wellbeing linkage.</td></tr><tr><td>Review disclosure</td><td>Privacy / reporting reviewer</td><td>Suppression decisions, permissions and approved client scope.</td></tr><tr><td>Approve and issue</td><td>Report owner</td><td>Version, reviewed scope, known omissions and approval timestamp.</td></tr><tr><td>Follow up</td><td>Assigned action owner</td><td>Due date, action taken, evidence of closure and next-period review.</td></tr></tbody></table></div>
-<div class="note amber"><strong>Current example release status</strong><p>Partial-coverage demonstration. Two vessel submissions remain missing. A production report would either be held or explicitly approved for release with that limitation; missing figures would never be silently treated as zero.</p></div>
-</section>
 <section id="specification" class="tab-panel" role="tabpanel" aria-labelledby="tab-specification" hidden>
-<span class="eyebrow">05 / PRODUCT & AUTOMATION</span><h2>Reporting Specification</h2><p class="section-desc">A proposed handoff from maritime requirements to product development: what to collect, how to calculate it and what must pass before a client report is issued.</p>
+<span class="eyebrow">04 / PRODUCT & AUTOMATION</span><h2>Reporting Specification</h2><p class="section-desc">A proposed handoff from maritime requirements to product development: what to collect, how to calculate it and what must pass before a client report is issued.</p>
 <div class="actions"><button class="action-button" id="download-inputs">Download fictional inputs · CSV</button><span class="small">Aggregate example inputs only; no personal or clinical records.</span></div>
 <div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Metric / proposed fields</th><th scope="col">Calculation and example</th><th scope="col">Input checks / source</th></tr></thead><tbody><tr><td>Vessel reporting<br><code>period, vessel_code, submission_status</code></td><td>Unique accepted submissions / expected vessels.<br>10 / 12 = 83.3%.</td><td>One accepted record per vessel-period; two missing statuses preserved. S01.</td></tr><tr><td>Daily reply coverage<br><code>valid_replies, eligible_crew_days</code></td><td>5,520 / 7,200 = 76.7% for reporting vessels. Eligible crew-days sum the daily eligible roster counts.</td><td>Validate the reporting cohort and period; roster changes affect the denominator. Replies ≤ eligible crew-days. S01–S02.</td></tr><tr><td>Service reach<br><code>distinct_users, eligible_crew</code></td><td>192 / 240 = 80.0%. Count each eligible crew member once per period.</td><td>Deduplicate within an authorised service-use dataset; do not join named operational files to wellbeing answers. S03.</td></tr><tr><td>Course completion<br><code>assignment_id, due_date, completion_date, status</code></td><td>124 completed by cutoff / 180 assignments due in the period = 68.9%.</td><td>Unique assignment; completion cannot precede assignment. Document cancelled or deferred assignments. S04.</td></tr><tr><td>Activity uptake<br><code>event_id, attended, duty, rest, choice, no_reason</code></td><td>Example Vessel A: 55 / (55 + 15 + 11) = 67.9%. Duty and protected rest excluded from availability.</td><td>One mutually exclusive status per crew-event; counts sum to 144; available = 81. S05.</td></tr><tr><td>Distinct activity reach<br><code>distinct_attendees, eligible_crew</code></td><td>Example Vessel A: 18 / 24 = 75.0%, independent of repeated attendances.</td><td>Deduplicate in a separate authorised attendance register. Never sum event attendances as unique people. S05.</td></tr><tr><td>Feeling / context shares<br><code>category, day_type, valid_reply_count</code></td><td>Category count / valid replies in the same cohort. Port: 220 / 1,664 = 13.2%; sea: 304 / 3,856 = 7.9%.</td><td>Categories sum to 5,520; context groups are mutually exclusive. Suppress unsafe groups; no causal inference. S02.</td></tr></tbody></table></div>
 <details><summary>Field handling and acceptance criteria</summary><div class="detail-body"><ul><li><strong>Dates and scope:</strong> use an agreed vessel reporting-day convention, month and cutoff. Validate that each included source covers the same period.</li><li><strong>Missing and zero:</strong> missing is null / pending. A reported zero is a valid observation. A zero denominator produces “Not applicable”, never 0%.</li><li><strong>Duplicates:</strong> the collection layer should allow one valid check-in per eligible crew-day using an appropriately protected mechanism; retain a documented correction policy. Never claim this aggregate demo proves row-level uniqueness.</li><li><strong>Rounding:</strong> calculate from full counts, then display one decimal. Show numerator and denominator.</li><li><strong>Acceptance examples:</strong> two missing submissions keep completeness at 10/12; their crew-days do not enter reply coverage. A duplicated submission is rejected. A mismatch in the event balance blocks release.</li><li><strong>Disclosure:</strong> run subgroup and inference-risk checks before export. Source provenance and reviewer sign-off remain required.</li></ul></div></details>
 <h3>Illustrative Input and Evidence Register</h3>
-<p class="small">These IDs identify authored example aggregates supplied with this page. The proposed production records below are requirements, not files recovered from a company or integrations already built.</p>
-<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">ID / version</th><th scope="col">Example input</th><th scope="col">Proposed production record / owner</th></tr></thead><tbody><tr><td>S01 · v2 · Sep 2026</td><td>12 expected; 10 reporting; 240 eligible crew; 7,200 crew-days.</td><td>Roster-day totals and submission manifest / reporting analyst.</td></tr><tr><td>S02 · v2 · Sep 2026</td><td>5,520 replies across Example Vessels A–J; K–L awaiting data. Includes category and context counts.</td><td>Validated aggregate response extract / authorised data custodian.</td></tr><tr><td>S03 · v2 · Sep 2026</td><td>192 distinct service users / 240 eligible crew.</td><td>Deduplicated usage extract / service reporting owner.</td></tr><tr><td>S04 · v2 · Sep 2026</td><td>124 completed / 180 due assignments.</td><td>Assignment-status extract / learning administrator.</td></tr><tr><td>S05 · v2 · Sep 2026</td><td>Activity totals for Example Vessels A–J. Worked example A: six events; 144 opportunities; 55 attendances; 18 distinct attendees.</td><td>Activity/availability aggregates / designated vessel coordinator.</td></tr><tr><td>A01 · proposed</td><td>ACT-01 and ACT-02 below.</td><td>Action register with due dates and closure evidence / assigned owners.</td></tr></tbody></table></div>
-<h3>Live Aggregate Checks for This Demonstration</h3><div id="validation-results" aria-live="polite"></div>
-<p class="small">These checks run on the fictional aggregates in this page. They do not validate original response rows, real identities, source authenticity, privacy compliance or a production integration.</p>
+<p class="small">These IDs identify authored example aggregates supplied with this page. Fleet figures are calculated from the ten reporting vessel records. The fictional baseline assumes fixed, separate crews with no vessel transfers during September; therefore distinct service-user counts are additive. In production, define and validate cross-vessel deduplication before summing unique people. The proposed production records below are requirements, not files recovered from a company or integrations already built.</p>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">ID / version</th><th scope="col">Example input</th><th scope="col">Proposed production record / owner</th></tr></thead><tbody><tr><td>S01 · v3 · Sep 2026</td><td>12 expected; 10 reporting; 240 eligible crew; 7,200 crew-days.</td><td>Roster-day totals and submission manifest / reporting analyst.</td></tr><tr><td>S02 · v3 · Sep 2026</td><td>5,520 replies across Example Vessels A–J, with vessel-level feeling categories and port/sea counts; K–L have no submission.</td><td>Validated aggregate response extract / authorised data custodian.</td></tr><tr><td>S03 · v3 · Sep 2026</td><td>192 distinct service users / 240 eligible crew, reconciled from A–J under the fixed-crew assumption.</td><td>Deduplicated usage extract / service reporting owner.</td></tr><tr><td>S04 · v3 · Sep 2026</td><td>124 completed / 180 due assignments, reconciled from A–J.</td><td>Assignment-status extract / learning administrator.</td></tr><tr><td>S05 · v3 · Sep 2026</td><td>Activity totals for Example Vessels A–J. Worked example A: six events; 144 opportunities; 55 attendances; 18 distinct attendees.</td><td>Activity/availability aggregates / designated vessel coordinator.</td></tr><tr><td>A01 · proposed</td><td>ACT-01 and ACT-02 below.</td><td>Action register with due dates and closure evidence / assigned owners.</td></tr></tbody></table></div>
+<h3>Reconciliation Checks on Fictional Data</h3><div id="validation-results" aria-live="polite"></div>
+<p class="small">These checks reconcile the authored vessel records, their calculated fleet totals and the fixed fictional baseline in this page. They do not validate original response rows, real identities, source authenticity, privacy compliance or a production integration.</p>
 <details><summary>Proposed delivery priorities</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Priority</th><th scope="col">Product requirement</th><th scope="col">Acceptance evidence</th></tr></thead><tbody><tr><td>P1</td><td>Correct cohort, missing-data status and metric definitions.</td><td>A missing vessel cannot silently become a zero; exported values reproduce displayed calculations.</td></tr><tr><td>P1</td><td>Disclosure review and source/version traceability.</td><td>Unsafe small groups are suppressed and a release is linked to reviewer approval.</td></tr><tr><td>P2</td><td>Recurring report generation and authorised imports.</td><td>Same validated inputs produce the same versioned report; failed imports are held with actionable errors.</td></tr><tr><td>P2</td><td>Action tracking and feedback.</td><td>Owners can record evidence, reopen unresolved items and feed approved changes into the next reporting version.</td></tr></tbody></table></div></div></details>
+</section>
+<section id="governance" class="tab-panel" role="tabpanel" aria-labelledby="tab-governance" hidden>
+<span class="eyebrow">05 / GOVERNANCE BY DESIGN</span><h2>Privacy and Review Controls</h2><p class="section-desc">Proposed safeguards informed by my DICT Privacy Impact Assessment and Data Privacy training. Production decisions require an agreed purpose, lawful basis, responsibilities and retention schedule.</p>
+<div class="grid-2"><div class="note "><strong>Separate datasets</strong><p>Voluntary wellbeing responses would be kept separate from named work/rest and personnel records. Client reports would receive approved aggregates. Clinical content and individual support histories would not appear in these reports.</p></div><div class="note "><strong>Limit small-group disclosure</strong><p>Proposed starting rule: suppress a subgroup below five distinct contributors. Also assess rare categories, totals that reveal a hidden cell, repeated reports and combined filters. Five is a design assumption for review, not a legal guarantee of anonymity.</p></div><div class="note "><strong>Define access and retention</strong><p>An analyst prepares aggregates; a designated reviewer approves releases; clients receive the agreed report. Retention and deletion rules would be defined per dataset before live collection, with access logged and periodically reviewed.</p></div><div class="note "><strong>Protect voluntary participation</strong><p>Non-response and choosing not to attend would not be treated as poor performance. Self-reported feelings are not clinical assessments. Existing support and complaint routes must remain clear and accessible.</p></div></div>
+<h3>Proposed Release Workflow</h3>
+<div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Stage</th><th scope="col">Owner role</th><th scope="col">Required evidence</th></tr></thead><tbody><tr><td>Validate inputs</td><td>Reporting analyst</td><td>Source IDs, date range, duplicates check, roster denominator and reconciled totals.</td></tr><tr><td>Review operational context</td><td>Designated operator contact</td><td>Confirmation of duty/rest definitions and aggregate access barriers; no individual wellbeing linkage.</td></tr><tr><td>Review disclosure</td><td>Privacy / reporting reviewer</td><td>Suppression decisions, permissions and approved client scope.</td></tr><tr><td>Approve and issue</td><td>Report owner</td><td>Version, reviewed scope, known omissions and approval timestamp.</td></tr><tr><td>Follow up</td><td>Assigned action owner</td><td>Due date, action taken, evidence of closure and next-period review.</td></tr></tbody></table></div>
+<div class="note amber"><strong>Current example release status</strong><p>Partial-coverage demonstration. Two vessel submissions remain missing. A production report would either be held or explicitly approved for release with that limitation; missing figures would never be silently treated as zero.</p></div>
 </section>
 <section id="client" class="tab-panel" role="tabpanel" aria-labelledby="tab-client" hidden>
 <span class="eyebrow">06 / CLIENT SUPPORT & IMPROVEMENT</span><h2>Client Review Pack</h2><p class="section-desc">Example answers for an internal commercial or client-review team. Proposed scope and service capabilities would be confirmed with Lifekeys before use in a live proposal.</p>
@@ -268,7 +310,7 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
 <div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Action / owner role</th><th scope="col">Proposed next step</th><th scope="col">Due / closure evidence</th></tr></thead><tbody><tr><td>ACT-01 · reporting analyst</td><td>Request the two missing vessel submissions; record availability and exceptions.</td><td>Before next release decision. Close with accepted source versions or a documented partial-release decision.</td></tr><tr><td>ACT-02 · operator contact</td><td>Assess a second optional activity window with protected duty/rest coverage.</td><td>Before next activity plan. Close with reviewed schedule and next-period aggregate availability/uptake.</td></tr></tbody></table></div>
 <h3>Standards Monitoring and Change Control</h3><p class="small">Public references checked 29 October 2026. Monthly review cadence and the owner roles below are proposals. A change is assessed for applicability before any reporting rule is updated.</p>
 <div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Reference / observed status</th><th scope="col">Reporting implication</th><th scope="col">Proposed owner / next step</th></tr></thead><tbody><tr><td><a href='https://www.ilo.org/resource/news/new-important-set-amendments-mlc-2006-will-enter-force-23-december-2024'>MLC 2022 amendments</a><br>Entered into force 23 December 2024.</td><td>Keep social-connectivity access in the recreation review; do not equate an activity count with provision of connectivity.</td><td>Compliance/reporting lead: check flag-state implementation and client scope at onboarding.</td></tr><tr><td><a href='https://www.ilo.org/global/standards/maritime-labour-convention/text/lang--en/index.htm'>MLC 2025 amendments</a><br>Expected entry into force: 23 December 2027.</td><td>Track separately from provisions currently in force; assess future changes before updating client claims.</td><td>Compliance/reporting lead: next source check 29 November 2026, or earlier on an official notice.</td></tr><tr><td><a href='https://www.imo.org/en/ourwork/humanelement/pages/fatigue.aspx'>IMO fatigue guidance</a><br>MSC.1/Circ.1598.</td><td>Keep fatigue education and operational controls distinct from engagement scores.</td><td>Reporting lead + operator: review guidance updates and client feedback monthly.</td></tr></tbody></table></div>
-<details><summary>Example version log and feedback loop</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Version</th><th scope="col">Change</th><th scope="col">Acceptance check</th></tr></thead><tbody><tr><td>0.1 · initial concept</td><td>Fleet and vessel dashboards with illustrative figures.</td><td>Review labels and calculations against the source definitions.</td></tr><tr><td>0.4 · current proposal</td><td>Explicit reporting cohort, metric dictionary, aggregate checks, evidence IDs, client Q&A, vessel search and report sharing.</td><td>Recalculate every headline; verify missing-data treatment, vessel-event totals, keyboard navigation and mobile layout.</td></tr><tr><td>Next revision · proposed</td><td>Collect reviewer/client feedback and prioritise an approved change.</td><td>Record request, rationale, affected fields, owner, test result and reviewer before release.</td></tr></tbody></table></div></div></details>
+<details><summary>Example version log and feedback loop</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Version</th><th scope="col">Change</th><th scope="col">Acceptance check</th></tr></thead><tbody><tr><td>0.1 · initial concept</td><td>Fleet and vessel dashboards with illustrative figures.</td><td>Review labels and calculations against the source definitions.</td></tr><tr><td>0.5 · current proposal</td><td>Paired tab colors, staged reading guide, complete fictional vessel-to-fleet reconciliation, repeated PDF notices and linked email summaries.</td><td>Recalculate every headline; verify missing-data treatment, vessel-event totals, keyboard navigation and mobile layout.</td></tr><tr><td>Next revision · proposed</td><td>Collect reviewer/client feedback and prioritise an approved change.</td><td>Record request, rationale, affected fields, owner, test result and reviewer before release.</td></tr></tbody></table></div></div></details>
 <div class="note "><strong>How this builds on my experience</strong><p>The approach draws on shipboard reporting and source cross-checks, linked Excel forms, work/rest coordination and crew activities described in my application. This sample applies that experience to proposed data definitions, quality controls and review workflows for Lifekeys.</p></div>
 </section>
 </div>
@@ -276,59 +318,74 @@ summary{cursor:pointer;font-weight:600;padding:16px;color:#0f172a;background:#f8
 <p id="report-status" class="visually-hidden" role="status" aria-live="polite"></p>
 <noscript><p class="small" style="color:white">Enable JavaScript to open the interactive reports and charts.</p></noscript>
 </main>
-<footer class="site-footer">Prepared by Aldrin M. Ulep · Independent Maritime Work Sample<br>Proposal v0.4 · Updated 29 October 2026 · Fictional Reporting Period: September 2026<br><a href="https://lifekeys.no/career/product-lead-compliance-and-reporting">Product Lead – Compliance & Reporting (Maritime)</a></footer>
+<footer class="site-footer">Prepared by Aldrin M. Ulep · Independent Maritime Work Sample<br>Proposal v0.5 · Updated 29 October 2026 · Fictional Reporting Period: September 2026<br><a href="https://lifekeys.no/career/product-lead-compliance-and-reporting">Product Lead – Compliance & Reporting (Maritime)</a></footer>
 <script>
 
 'use strict';
-const report = {
-  "period": "2026-09",
-  "version": "0.4",
-  "sourcesVersion": "v2",
-  "fleet": {
-    "expected": 12,
-    "reporting": 10,
-    "missing": 2,
-    "crew": 240,
-    "crewDays": 7200,
-    "replies": 5520,
-    "users": 192,
-    "assignments": 180,
-    "completed": 124
-  },
+// Authored fictional records; all fleet totals below are calculated from A–J.
+// The September example assumes separate, fixed 24-person crews and no transfers.
+const PUBLIC_SAMPLE_URL='https://aldrinulep.github.io/LIFEKEYS-SAMPLE-PROJECT/';
+const expectedBaseline = {
+  "expected": 12,
+  "reporting": 10,
+  "missing": 2,
+  "crew": 240,
+  "crewDays": 7200,
+  "replies": 5520,
+  "users": 192,
+  "assignments": 180,
+  "completed": 124,
+  "portReplies": 1664,
+  "portFrustrated": 220,
+  "seaReplies": 3856,
+  "seaFrustrated": 304,
   "feelings": [
-    {
-      "label": "Happy / calm",
-      "count": 2296,
-      "color": "#047857"
-    },
-    {
-      "label": "Neutral",
-      "count": 1568,
-      "color": "#0284c7"
-    },
-    {
-      "label": "Sad / low",
-      "count": 760,
-      "color": "#b45309"
-    },
-    {
-      "label": "Angry / frustrated",
-      "count": 524,
-      "color": "#be123c"
-    },
-    {
-      "label": "Anxious / worried",
-      "count": 372,
-      "color": "#7c3aed"
-    }
-  ],
-  "context": {
-    "portReplies": 1664,
-    "portFrustrated": 220,
-    "seaReplies": 3856,
-    "seaFrustrated": 304
+    2296,
+    1568,
+    760,
+    524,
+    372
+  ]
+};
+const vesselABaseline = {
+  "crew": 24,
+  "days": 30,
+  "replies": 540,
+  "events": 6,
+  "attended": 55,
+  "duty": 38,
+  "rest": 25,
+  "choice": 15,
+  "noReason": 11,
+  "distinct": 18
+};
+const feelingDefinitions = [
+  {
+    "label": "Happy / calm",
+    "color": "#047857"
   },
-  "vessel": {
+  {
+    "label": "Neutral",
+    "color": "#0284c7"
+  },
+  {
+    "label": "Sad / low",
+    "color": "#b45309"
+  },
+  {
+    "label": "Angry / frustrated",
+    "color": "#be123c"
+  },
+  {
+    "label": "Anxious / worried",
+    "color": "#7c3aed"
+  }
+];
+const vesselReports = [
+  {
+    "id": "EX-A",
+    "name": "Example Vessel A",
+    "status": "reporting",
     "crew": 24,
     "days": 30,
     "replies": 540,
@@ -338,39 +395,330 @@ const report = {
     "rest": 25,
     "choice": 15,
     "noReason": 11,
-    "distinct": 18
+    "distinct": 18,
+    "users": 19,
+    "assignments": 18,
+    "completed": 12,
+    "feelings": [
+      225,
+      153,
+      74,
+      51,
+      37
+    ],
+    "portReplies": 163,
+    "portFrustrated": 22,
+    "seaReplies": 377,
+    "seaFrustrated": 29
+  },
+  {
+    "id": "EX-B",
+    "name": "Example Vessel B",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 585,
+    "events": 6,
+    "attended": 64,
+    "duty": 32,
+    "rest": 24,
+    "choice": 16,
+    "noReason": 8,
+    "distinct": 20,
+    "users": 20,
+    "assignments": 18,
+    "completed": 14,
+    "feelings": [
+      243,
+      166,
+      81,
+      56,
+      39
+    ],
+    "portReplies": 176,
+    "portFrustrated": 24,
+    "seaReplies": 409,
+    "seaFrustrated": 32
+  },
+  {
+    "id": "EX-C",
+    "name": "Example Vessel C",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 510,
+    "events": 6,
+    "attended": 42,
+    "duty": 46,
+    "rest": 30,
+    "choice": 16,
+    "noReason": 10,
+    "distinct": 16,
+    "users": 18,
+    "assignments": 18,
+    "completed": 10,
+    "feelings": [
+      212,
+      145,
+      70,
+      48,
+      35
+    ],
+    "portReplies": 154,
+    "portFrustrated": 20,
+    "seaReplies": 356,
+    "seaFrustrated": 28
+  },
+  {
+    "id": "EX-D",
+    "name": "Example Vessel D",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 600,
+    "events": 6,
+    "attended": 70,
+    "duty": 28,
+    "rest": 20,
+    "choice": 18,
+    "noReason": 8,
+    "distinct": 22,
+    "users": 21,
+    "assignments": 18,
+    "completed": 15,
+    "feelings": [
+      249,
+      171,
+      83,
+      57,
+      40
+    ],
+    "portReplies": 181,
+    "portFrustrated": 24,
+    "seaReplies": 419,
+    "seaFrustrated": 33
+  },
+  {
+    "id": "EX-E",
+    "name": "Example Vessel E",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 555,
+    "events": 6,
+    "attended": 58,
+    "duty": 34,
+    "rest": 28,
+    "choice": 14,
+    "noReason": 10,
+    "distinct": 19,
+    "users": 19,
+    "assignments": 18,
+    "completed": 12,
+    "feelings": [
+      231,
+      158,
+      76,
+      53,
+      37
+    ],
+    "portReplies": 167,
+    "portFrustrated": 22,
+    "seaReplies": 388,
+    "seaFrustrated": 31
+  },
+  {
+    "id": "EX-F",
+    "name": "Example Vessel F",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 525,
+    "events": 6,
+    "attended": 48,
+    "duty": 44,
+    "rest": 26,
+    "choice": 16,
+    "noReason": 10,
+    "distinct": 17,
+    "users": 18,
+    "assignments": 18,
+    "completed": 11,
+    "feelings": [
+      218,
+      149,
+      73,
+      50,
+      35
+    ],
+    "portReplies": 158,
+    "portFrustrated": 21,
+    "seaReplies": 367,
+    "seaFrustrated": 29
+  },
+  {
+    "id": "EX-G",
+    "name": "Example Vessel G",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 570,
+    "events": 6,
+    "attended": 62,
+    "duty": 30,
+    "rest": 24,
+    "choice": 18,
+    "noReason": 10,
+    "distinct": 20,
+    "users": 20,
+    "assignments": 18,
+    "completed": 13,
+    "feelings": [
+      237,
+      162,
+      79,
+      54,
+      38
+    ],
+    "portReplies": 172,
+    "portFrustrated": 23,
+    "seaReplies": 398,
+    "seaFrustrated": 31
+  },
+  {
+    "id": "EX-H",
+    "name": "Example Vessel H",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 480,
+    "events": 6,
+    "attended": 40,
+    "duty": 48,
+    "rest": 32,
+    "choice": 14,
+    "noReason": 10,
+    "distinct": 15,
+    "users": 17,
+    "assignments": 18,
+    "completed": 9,
+    "feelings": [
+      200,
+      136,
+      66,
+      46,
+      32
+    ],
+    "portReplies": 145,
+    "portFrustrated": 19,
+    "seaReplies": 335,
+    "seaFrustrated": 27
+  },
+  {
+    "id": "EX-I",
+    "name": "Example Vessel I",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 615,
+    "events": 6,
+    "attended": 72,
+    "duty": 24,
+    "rest": 22,
+    "choice": 16,
+    "noReason": 10,
+    "distinct": 23,
+    "users": 22,
+    "assignments": 18,
+    "completed": 16,
+    "feelings": [
+      256,
+      175,
+      84,
+      58,
+      42
+    ],
+    "portReplies": 185,
+    "portFrustrated": 24,
+    "seaReplies": 430,
+    "seaFrustrated": 34
+  },
+  {
+    "id": "EX-J",
+    "name": "Example Vessel J",
+    "status": "reporting",
+    "crew": 24,
+    "days": 30,
+    "replies": 540,
+    "events": 6,
+    "attended": 54,
+    "duty": 38,
+    "rest": 28,
+    "choice": 14,
+    "noReason": 10,
+    "distinct": 18,
+    "users": 18,
+    "assignments": 18,
+    "completed": 12,
+    "feelings": [
+      225,
+      153,
+      74,
+      51,
+      37
+    ],
+    "portReplies": 163,
+    "portFrustrated": 21,
+    "seaReplies": 377,
+    "seaFrustrated": 30
+  },
+  {
+    "id": "EX-K",
+    "name": "Example Vessel K",
+    "status": "pending"
+  },
+  {
+    "id": "EX-L",
+    "name": "Example Vessel L",
+    "status": "pending"
   }
-};
-
-// Authored fictional profiles. A–J reconcile to the existing 10-vessel reply cohort.
-const vesselReports = [
- {id:'EX-A',name:'Example Vessel A',status:'reporting',crew:24,days:30,replies:540,events:6,attended:55,duty:38,rest:25,choice:15,noReason:11,distinct:18},
- {id:'EX-B',name:'Example Vessel B',status:'reporting',crew:24,days:30,replies:585,events:6,attended:64,duty:32,rest:24,choice:16,noReason:8,distinct:20},
- {id:'EX-C',name:'Example Vessel C',status:'reporting',crew:24,days:30,replies:510,events:6,attended:42,duty:46,rest:30,choice:16,noReason:10,distinct:16},
- {id:'EX-D',name:'Example Vessel D',status:'reporting',crew:24,days:30,replies:600,events:6,attended:70,duty:28,rest:20,choice:18,noReason:8,distinct:22},
- {id:'EX-E',name:'Example Vessel E',status:'reporting',crew:24,days:30,replies:555,events:6,attended:58,duty:34,rest:28,choice:14,noReason:10,distinct:19},
- {id:'EX-F',name:'Example Vessel F',status:'reporting',crew:24,days:30,replies:525,events:6,attended:48,duty:44,rest:26,choice:16,noReason:10,distinct:17},
- {id:'EX-G',name:'Example Vessel G',status:'reporting',crew:24,days:30,replies:570,events:6,attended:62,duty:30,rest:24,choice:18,noReason:10,distinct:20},
- {id:'EX-H',name:'Example Vessel H',status:'reporting',crew:24,days:30,replies:480,events:6,attended:40,duty:48,rest:32,choice:14,noReason:10,distinct:15},
- {id:'EX-I',name:'Example Vessel I',status:'reporting',crew:24,days:30,replies:615,events:6,attended:72,duty:24,rest:22,choice:16,noReason:10,distinct:23},
- {id:'EX-J',name:'Example Vessel J',status:'reporting',crew:24,days:30,replies:540,events:6,attended:54,duty:38,rest:28,choice:14,noReason:10,distinct:18},
- {id:'EX-K',name:'Example Vessel K',status:'pending'},
- {id:'EX-L',name:'Example Vessel L',status:'pending'}
 ];
+function deriveReport(records){
+ const submitted=records.filter(v=>v.status==='reporting');
+ const sum=key=>submitted.reduce((total,v)=>total+v[key],0);
+ return {period:'2026-09',issued:'2026-10-29',version:'0.5',sourcesVersion:'v3',
+  fleet:{expected:records.length,reporting:submitted.length,missing:records.length-submitted.length,crew:sum('crew'),crewDays:submitted.reduce((total,v)=>total+v.crew*v.days,0),replies:sum('replies'),users:sum('users'),assignments:sum('assignments'),completed:sum('completed')},
+  feelings:feelingDefinitions.map((item,i)=>({...item,count:submitted.reduce((total,v)=>total+v.feelings[i],0)})),
+  context:{portReplies:sum('portReplies'),portFrustrated:sum('portFrustrated'),seaReplies:sum('seaReplies'),seaFrustrated:sum('seaFrustrated')},
+  vessel:submitted.find(v=>v.id==='EX-A')};
+}
+const report=deriveReport(vesselReports);
 let selectedVesselId='EX-A';
 function selectedVessel(){return vesselReports.find(v=>v.id===selectedVesselId);}
 function matchingVessels(query){const q=query.trim().toLowerCase();return vesselReports.filter(v=>(v.name+' '+v.id).toLowerCase().includes(q));}
 function vesselTotals(v){return {eligibleDays:v.crew*v.days,opportunities:v.crew*v.events,available:v.attended+v.choice+v.noReason,unused:v.choice+v.noReason,unavailable:v.duty+v.rest,nonAttendance:v.duty+v.rest+v.choice+v.noReason};}
-function validateVessels(){
- const submitted=vesselReports.filter(v=>v.status==='reporting');
- return submitted.length===report.fleet.reporting && vesselReports.length===report.fleet.expected &&
-  submitted.reduce((s,v)=>s+v.replies,0)===report.fleet.replies && submitted.reduce((s,v)=>s+v.crew*v.days,0)===report.fleet.crewDays &&
-  submitted.reduce((s,v)=>s+v.crew,0)===report.fleet.crew && submitted.every(v=>{
-   const t=vesselTotals(v);
-   return ['crew','days','replies','events','attended','duty','rest','choice','noReason','distinct'].every(k=>Number.isInteger(v[k])&&v[k]>=0) &&
-    v.attended+t.nonAttendance===t.opportunities&&v.replies<=t.eligibleDays&&v.distinct<=v.crew&&v.distinct<=v.attended;
-  });
+function reconciliationChecks(records=vesselReports,data=report){
+ const submitted=records.filter(v=>v.status==='reporting'),pending=records.filter(v=>v.status==='pending');
+ const sum=key=>submitted.reduce((total,v)=>total+v[key],0);
+ const same=(actual,displayed,expected)=>actual===displayed&&displayed===expected;
+ const checks=[
+  {ok:records.length===expectedBaseline.expected&&new Set(records.map(v=>v.id)).size===records.length&&submitted.length===expectedBaseline.reporting&&pending.length===expectedBaseline.missing&&records.length===submitted.length+pending.length,label:'Submission manifest: 12 unique vessels; 10 reports and 2 missing submissions.'},
+  {ok:pending.every(v=>Object.keys(v).every(k=>['id','name','status'].includes(k))),label:'Missing submissions contain status only; no invented zero metrics.'}
+ ];
+ const labels={crew:'Eligible crew',replies:'Valid replies',users:'Distinct service users',assignments:'Due learning assignments',completed:'Completed learning assignments'};
+ for(const [key,label] of Object.entries(labels))checks.push({ok:same(sum(key),data.fleet[key],expectedBaseline[key]),label:label+': vessel sum = calculated fleet = fictional baseline ('+expectedBaseline[key].toLocaleString()+').'});
+ const crewDays=submitted.reduce((total,v)=>total+v.crew*v.days,0);
+ checks.push({ok:same(crewDays,data.fleet.crewDays,expectedBaseline.crewDays),label:'Eligible crew-days reconcile to 7,200.'});
+ checks.push({ok:feelingDefinitions.every((_,i)=>same(submitted.reduce((total,v)=>total+v.feelings[i],0),data.feelings[i].count,expectedBaseline.feelings[i])),label:'All five feeling categories reconcile vessel-to-fleet, including 524 frustration replies.'});
+ checks.push({ok:['portReplies','portFrustrated','seaReplies','seaFrustrated'].every(key=>same(sum(key),data.context[key],expectedBaseline[key])),label:'Port/sea reply counts and frustration counts reconcile vessel-to-fleet.'});
+ const fields=['crew','days','replies','events','attended','duty','rest','choice','noReason','distinct','users','assignments','completed','portReplies','portFrustrated','seaReplies','seaFrustrated'];
+ checks.push({ok:submitted.every(v=>fields.every(k=>Number.isInteger(v[k])&&v[k]>=0)&&Array.isArray(v.feelings)&&v.feelings.length===5&&v.feelings.every(n=>Number.isInteger(n)&&n>=0)),label:'Each reporting vessel contains complete, non-negative integer inputs.'});
+ checks.push({ok:submitted.every(v=>{const t=vesselTotals(v);return v.attended+t.nonAttendance===t.opportunities&&v.distinct<=v.crew&&v.distinct<=v.attended&&v.replies<=t.eligibleDays&&v.users<=v.crew&&v.completed<=v.assignments&&v.feelings.reduce((s,n)=>s+n,0)===v.replies&&v.portReplies+v.seaReplies===v.replies&&v.portFrustrated+v.seaFrustrated===v.feelings[3]&&v.portFrustrated<=v.portReplies&&v.seaFrustrated<=v.seaReplies;}),label:'Every vessel balances its opportunities, feeling categories and contexts; numerators fit their denominators.'});
+ const vesselA=submitted.find(v=>v.id==='EX-A');
+ checks.push({ok:!!vesselA&&Object.entries(vesselABaseline).every(([key,value])=>vesselA[key]===value),label:'Example Vessel A retains every established reply and activity figure.'});
+ return checks;
 }
+function validateVessels(){return reconciliationChecks().every(check=>check.ok);}
 
 function ratio(n,d) {
  if(n===null||d===null) return null;
@@ -405,6 +753,7 @@ const photos = [...document.querySelectorAll('.hero-photo')];
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const photoCache = new Map();
 let activeIndex = -1, shownPhotoIndex = -1, frontPhoto = 0;
+let hasExploredReports = false;
 let photoBusy = false, queuedPhoto = null, panelAnimation = null;
 let moodChart = null, activityChart = null;
 
@@ -467,10 +816,18 @@ async function changePhoto(file,index) {
 }
 
 function renderMetrics() {
- const f=report.fleet,v=report.vessel;
+ const f=report.fleet;
  setText('fleet-reporting',percent(f.reporting,f.expected));setText('fleet-replies',percent(f.replies,f.crewDays));
  setText('fleet-use',percent(f.users,f.crew));setText('fleet-learning',percent(f.completed,f.assignments));
- const checks=[...validateAggregates(report),{ok:validateVessels(),label:"Searchable vessel profiles reconcile to fleet replies, crew and crew-days."}];
+ setText('fleet-reporting-count',f.reporting+' / '+f.expected+' expected vessels · S01');
+ setText('fleet-replies-count',f.replies.toLocaleString()+' / '+f.crewDays.toLocaleString()+' eligible crew-days · S01–S02');
+ setText('fleet-use-count',f.users+' / '+f.crew+' eligible crew · S03');
+ setText('fleet-learning-count',f.completed+' / '+f.assignments+' due assignments · S04');
+ const c=report.context;
+ document.getElementById('fleet-context-rows').innerHTML='<tr><td>Port / Transition</td><td>'+c.portFrustrated+' / '+c.portReplies.toLocaleString()+' · '+percent(c.portFrustrated,c.portReplies)+'</td><td>Share among submitted replies; does not establish cause.</td></tr><tr><td>Sea-only</td><td>'+c.seaFrustrated+' / '+c.seaReplies.toLocaleString()+' · '+percent(c.seaFrustrated,c.seaReplies)+'</td><td>Share among submitted replies; does not prove stable routines.</td></tr><tr><td>Missing Vessels</td><td>'+f.missing+' / '+f.expected+'</td><td>No submission this period; no assumed zero replies.</td></tr>';
+ document.getElementById('fleet-feeling-rows').innerHTML=report.feelings.map(item=>'<tr><td>'+item.label+'</td><td>'+item.count.toLocaleString()+'</td><td>'+percent(item.count,f.replies)+'</td></tr>').join('');
+ setText('fleet-feeling-total','Total: '+f.replies.toLocaleString()+' valid replies. Percentages use unrounded counts and display one decimal place. Rounding can affect displayed totals.');
+ const checks=reconciliationChecks();
  document.getElementById('validation-results').innerHTML='<ul class="check-list">'+checks.map(c=>'<li class="'+(c.ok?'check-pass':'check-fail')+'">'+(c.ok?'PASS':'FAIL')+' · '+c.label+'</li>').join('')+'<li class="check-warn">LIMITATION · Two missing vessels; completeness remains 83.3%. Original-row and privacy reviews are not performed by this demo.</li></ul>';
  document.getElementById('mood-legend').innerHTML=report.feelings.map(item=>'<li><span class="swatch" style="background:'+item.color+'"></span>'+item.label+' · '+percent(item.count,report.fleet.replies)+'</li>').join('');
 }
@@ -502,7 +859,11 @@ function activateTab(button,focus=false) {
  const first=activeIndex<0;
  const direction=first?'open':index>activeIndex?'right':'left';
  activeIndex=index;
- document.getElementById('promptBox').hidden=true;
+ document.getElementById('start-guide').hidden=true;
+ if(['fleet','vessel'].includes(button.dataset.panel))hasExploredReports=true;
+ const showExplore=!hasExploredReports&&['compliance','specification'].includes(button.dataset.panel);
+ document.getElementById('explore-guide').hidden=!showExplore;
+ document.getElementById('promptBox').hidden=!showExplore;
  shell.classList.add('is-open');
  reportContainer.hidden=false;
  tabs.forEach((b,i)=>{b.setAttribute('aria-selected',String(i===index));b.tabIndex=i===index?0:-1;});
@@ -535,6 +896,9 @@ tabs.forEach(button=>{
   if(target!==undefined){event.preventDefault();activateTab(tabs[target],true);}
  });
 });
+document.querySelectorAll('[data-open-report]').forEach(link=>link.addEventListener('click',()=>{
+ const button=document.getElementById('tab-'+link.dataset.openReport);activateTab(button,true);
+}));
 document.getElementById('chart-library').addEventListener('load',renderCharts);
 document.getElementById('skip-to-report').addEventListener('click',()=>{if(activeIndex<0)activateTab(tabs[0]);reportContainer.focus();});
 window.addEventListener('load',()=>preloadPhoto('fleet.jpg'),{once:true});
@@ -561,7 +925,7 @@ function showVesselSearch(query=''){
   const option=document.createElement('button');option.type='button';option.className='vessel-option';option.id='option-'+v.id;option.tabIndex=-1;option.setAttribute('role','option');option.setAttribute('aria-selected',String(v.id===selectedVesselId));
   const label=document.createElement('span');label.textContent=v.name;
   const code=document.createElement('small');code.textContent=v.id+' · Fictional';label.appendChild(code);
-  const status=document.createElement('span');status.className='option-status'+(v.status==='pending'?' pending':'');status.textContent=v.status==='pending'?'Awaiting Data':'Reporting';
+  const status=document.createElement('span');status.className='option-status'+(v.status==='pending'?' pending':'');status.textContent=v.status==='pending'?'No Submission This Period':'Reporting';
   option.append(label,status);option.addEventListener('pointerdown',event=>event.preventDefault());option.addEventListener('click',()=>chooseVessel(v.id));vesselOptions.appendChild(option);
  }
  if(!vesselMatches.length){const empty=document.createElement('p');empty.className='no-vessel-results';empty.textContent='No vessels found. Try Example Vessel B or EX-B. The current report remains selected.';vesselOptions.appendChild(empty);}
@@ -574,9 +938,9 @@ function renderVessel(){
  const v=selectedVessel();
  if(activityChart){activityChart.destroy();activityChart=null;}
  const target=document.getElementById('vessel-report-content');
- const heading='<div class="section-top"><h2 id="selected-vessel-name">'+v.name+'</h2><span class="status'+(v.status==='pending'?' amber':'')+'">'+(v.status==='pending'?'Awaiting Data':'Reporting')+'</span></div><p class="vessel-source">'+v.id+' · September 2026 · Fictional Data · Sources S01, S02, S05 / v2</p>';
+ const heading='<div class="section-top"><h2 id="selected-vessel-name">'+v.name+'</h2><span class="status'+(v.status==='pending'?' amber':'')+'">'+(v.status==='pending'?'No Submission This Period':'Reporting')+'</span></div><p class="vessel-source">'+v.id+' · September 2026 · Fictional Data · Sources S01–S05 / v3</p>';
  if(v.status==='pending'){
-  target.innerHTML=heading+'<div class="note amber vessel-pending"><strong>Report Awaiting Submission</strong><p>No accepted September data is available for this example vessel. Reply coverage, service use and activity figures are pending, not zero.</p><p>This vessel is included among the 12 expected submissions and excluded from the reporting-cohort denominators. Follow up before the next release decision.</p></div>';
+  target.innerHTML=heading+'<div class="note amber vessel-pending"><strong>No Submission This Period</strong><p>No September submission is available for this example vessel. Reply coverage, service use and activity figures are pending, not zero.</p><p>This vessel is included among the 12 expected submissions and excluded from the reporting-cohort denominators. Follow up before the next release decision.</p></div>';
   return;
  }
  const t=vesselTotals(v);
@@ -587,6 +951,12 @@ function renderVessel(){
  statCard('vessel-uptake',percent(v.attended,t.available),'Uptake When Available',v.attended+' attendances / '+t.available+' available opportunities · S05')+
  statCard('vessel-unused',percent(t.unused,t.available),'Available but Unused',t.unused+' / '+t.available+' available opportunities · S05')+
  statCard('vessel-reach',percent(v.distinct,v.crew),'Distinct Activity Reach',v.distinct+' / '+v.crew+' crew attended at least once · S05')+'</div>'+
+ '<div class="stats-grid service-stats">'+
+ statCard('vessel-service',percent(v.users,v.crew),'Service Reach',v.users+' / '+v.crew+' eligible crew · S03')+
+ statCard('vessel-learning',percent(v.completed,v.assignments),'Course Completion',v.completed+' / '+v.assignments+' due assignments · S04')+
+ statCard('vessel-frustration',percent(v.feelings[3],v.replies),'Frustration Reply Share',v.feelings[3]+' / '+v.replies+' valid replies · S02')+'</div>'+
+ '<details><summary>Feeling Categories and Operational Context</summary><div class="detail-body"><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Feeling Category</th><th scope="col">Replies</th><th scope="col">Share</th></tr></thead><tbody>'+feelingDefinitions.map((item,i)=>'<tr><td>'+item.label+'</td><td>'+v.feelings[i]+'</td><td>'+percent(v.feelings[i],v.replies)+'</td></tr>').join('')+'</tbody></table></div><p>Total: '+v.replies+' valid replies. Port / transition: '+v.portFrustrated+' frustration replies / '+v.portReplies+' replies ('+percent(v.portFrustrated,v.portReplies)+'). Sea-only: '+v.seaFrustrated+' / '+v.seaReplies+' ('+percent(v.seaFrustrated,v.seaReplies)+').</p><p>Reply shares describe submitted responses, not unique people or clinical outcomes. Operational context does not establish cause.</p></div></details>'+
+
  '<div class="grid-2"><div><h3>Every Opportunity Accounted for</h3><div class="table-wrap" tabindex="0"><table class="data-table"><thead><tr><th scope="col">Outcome</th><th scope="col">Instances</th><th scope="col">Meaning</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('')+'</tbody></table></div></div>'+
  '<div><h3>Reconciliation</h3><div class="equation">'+t.opportunities+' <span>Crew-Event Opportunities</span></div><p>'+v.events+' events × '+v.crew+' crew = '+t.opportunities+'</p><p>'+v.attended+' attended + '+v.duty+' duty + '+v.rest+' rest + '+v.choice+' choice + '+v.noReason+' no reason = '+t.opportunities+'</p><div class="equation">'+t.available+' <span>Available Opportunities</span></div><p>'+v.attended+' attended + '+v.choice+' choice + '+v.noReason+' no reason = '+t.available+'</p><div class="note"><strong>'+t.nonAttendance+' Total Non-Attendance Instances</strong><p>'+t.unavailable+' were unavailable because of duty or rest; '+t.unused+' were available but did not attend.</p></div></div></div>'+
  '<div class="chart-box activity-chart"><h3>Non-Attendance by Availability</h3><div class="chart-frame bar-frame"><canvas id="activityChart" role="img" aria-label="'+v.name+': '+v.duty+' on duty, '+v.rest+' protected rest, '+v.choice+' personal choice and '+v.noReason+' no reason given. Counts also appear in the table above."></canvas></div><p class="small">Duty and rest: '+t.unavailable+' unavailable opportunities. Choice and no reason: '+t.unused+' available but unused opportunities.</p></div>'+
@@ -596,7 +966,7 @@ function renderVessel(){
 function chooseVessel(id){
  const v=vesselReports.find(item=>item.id===id);if(!v)return;
  selectedVesselId=id;vesselSearch.value=v.name;closeVesselSearch();renderVessel();renderCharts();updateEmailLinks();
- setText('vessel-search-status',v.name+' selected. '+(v.status==='pending'?'Report awaiting submission.':'Report updated.'));
+ setText('vessel-search-status',v.name+' selected. '+(v.status==='pending'?'No submission this period.':'Report updated.'));
 }
 vesselSearch.addEventListener('focus',()=>{vesselSearch.select();showVesselSearch('');});
 vesselSearch.addEventListener('input',()=>showVesselSearch(vesselSearch.value));
@@ -614,23 +984,29 @@ browseVessels.addEventListener('click',()=>{const wasOpen=!vesselOptions.hidden;
 document.addEventListener('pointerdown',event=>{if(!document.getElementById('vessel-picker').contains(event.target))closeVesselSearch();});
 
 function reportSummary(scope){
- const lines=['Lifekeys Maritime Fleet Wellbeing','Independent Work Sample by Aldrin M. Ulep','September 2026 | Fictional Data | Not an Official Lifekeys Product',''];
+ const lines=['Lifekeys Maritime Fleet Wellbeing','Independent Work Sample by Aldrin M. Ulep','September 2026 | Fictional Data | Not an Official Lifekeys Product','Proposal v'+report.version+' | Sources '+report.sourcesVersion+' | Issued 29 October 2026',''];
  if(scope==='fleet'){
   const f=report.fleet;
-  lines.push('FLEET OVERVIEW','Vessels reporting: '+f.reporting+'/'+f.expected+' ('+percent(f.reporting,f.expected)+')','Daily reply coverage: '+f.replies+'/'+f.crewDays+' eligible crew-days ('+percent(f.replies,f.crewDays)+')','Service reach: '+f.users+'/'+f.crew+' eligible crew ('+percent(f.users,f.crew)+')','Course completion: '+f.completed+'/'+f.assignments+' due assignments ('+percent(f.completed,f.assignments)+')','','Two vessels (Example Vessels K and L) are awaiting data and excluded from the usage/reply denominators.','Sources S01–S04 / v2. Engagement does not establish clinical improvement or causation.');
+  lines.push('FLEET OVERVIEW','Vessels reporting: '+f.reporting+'/'+f.expected+' ('+percent(f.reporting,f.expected)+')','Daily reply coverage: '+f.replies+'/'+f.crewDays+' eligible crew-days ('+percent(f.replies,f.crewDays)+')','Service reach: '+f.users+'/'+f.crew+' eligible crew ('+percent(f.users,f.crew)+')','Course completion: '+f.completed+'/'+f.assignments+' due assignments ('+percent(f.completed,f.assignments)+')','','Two vessels (Example Vessels K and L) are awaiting data and excluded from the usage/reply denominators.','Sources S01–S04 / v3. Engagement does not establish clinical improvement or causation.');
  }else{
   const v=selectedVessel();lines.push(v.name.toUpperCase()+' ('+v.id+')');
-  if(v.status==='pending')lines.push('Status: Awaiting Data','No accepted September submission. Metrics are pending, not zero.','Excluded from the reporting-cohort denominators. Follow-up required before the next release decision.');
+  if(v.status==='pending')lines.push('Status: No Submission This Period','No September submission. Metrics are pending, not zero.','Excluded from the reporting-cohort denominators. Follow-up required before the next release decision.');
   else{
-   const t=vesselTotals(v);lines.push('Daily reply coverage: '+v.replies+'/'+t.eligibleDays+' ('+percent(v.replies,t.eligibleDays)+')','Activity uptake when available: '+v.attended+'/'+t.available+' ('+percent(v.attended,t.available)+')','Available but unused: '+t.unused+'/'+t.available+' ('+percent(t.unused,t.available)+')','Distinct activity reach: '+v.distinct+'/'+v.crew+' ('+percent(v.distinct,v.crew)+')','Total opportunities: '+t.opportunities+'; total non-attendance: '+t.nonAttendance,'Non-attendance: '+v.duty+' on duty; '+v.rest+' protected rest; '+v.choice+' personal choice; '+v.noReason+' no reason given.','Proposed follow-up: review another optional activity window without compromising duty or rest.','Sources S01, S02, S05 / v2. No wellbeing outcome is demonstrated.');
+   const t=vesselTotals(v);lines.push('Service reach: '+v.users+'/'+v.crew+' ('+percent(v.users,v.crew)+')','Course completion: '+v.completed+'/'+v.assignments+' ('+percent(v.completed,v.assignments)+')','Frustration reply share: '+v.feelings[3]+'/'+v.replies+' ('+percent(v.feelings[3],v.replies)+')','Daily reply coverage: '+v.replies+'/'+t.eligibleDays+' ('+percent(v.replies,t.eligibleDays)+')','Activity uptake when available: '+v.attended+'/'+t.available+' ('+percent(v.attended,t.available)+')','Available but unused: '+t.unused+'/'+t.available+' ('+percent(t.unused,t.available)+')','Distinct activity reach: '+v.distinct+'/'+v.crew+' ('+percent(v.distinct,v.crew)+')','Total opportunities: '+t.opportunities+'; total non-attendance: '+t.nonAttendance,'Non-attendance: '+v.duty+' on duty; '+v.rest+' protected rest; '+v.choice+' personal choice; '+v.noReason+' no reason given.','Proposed follow-up: review another optional activity window without compromising duty or rest.','Sources S01–S05 / v3. No wellbeing outcome is demonstrated.');
   }
  }
- lines.push('','All figures are authored examples. Attach an exported PDF if a full report is required.');
+ lines.push('','Work sample: '+PUBLIC_SAMPLE_URL,'All figures are authored examples. Attach an exported PDF if a full report is required.');
  return lines.join('\r\n');
 }
 function emailUrl(scope){const title=scope==='fleet'?'Fleet Overview':selectedVessel().name;return 'mailto:?subject='+encodeURIComponent('Independent Maritime Work Sample — '+title+' — September 2026')+'&body='+encodeURIComponent(reportSummary(scope));}
 function updateEmailLinks(){for(const scope of ['fleet','vessel'])document.getElementById('email-'+scope).href=emailUrl(scope);}
 
+// Use page-margin notices where implemented; retain a fixed print footer otherwise.
+try{
+ const pageRules=[...document.getElementById('print-margins').sheet.cssRules];
+ const supportsMargins=pageRules.some(rule=>rule.cssRules&&[...rule.cssRules].some(child=>child.cssText.startsWith('@bottom-center')));
+ document.documentElement.classList.toggle('has-print-margin-boxes',supportsMargins);
+}catch{};
 // Export only one report. Browser print-to-PDF needs no account, upload or backend.
 let printScope=null,printDetails=[],originalDocumentTitle=null;
 function prepareReportPrint(){
@@ -641,7 +1017,8 @@ function prepareReportPrint(){
  if(panelAnimation)panelAnimation.cancel();
  panels.forEach(panel=>panel.classList.toggle('print-target',panel===target));
  const label=scope==='vessel'?selectedVessel().name:target.querySelector('h2').textContent;
- setText('print-report-label',label+' · '+(scope==='vessel'?selectedVessel().id+' · ':'')+'Sources v2');
+ setText('print-report-label',label+' · '+(scope==='vessel'?selectedVessel().id+' · ':'')+'Sources v3');
+ setText('print-footer-label',label+(scope==='vessel'?' · '+selectedVessel().id:''));
  originalDocumentTitle=document.title;
  document.title='Lifekeys-'+label.replace(/[^a-z0-9]+/gi,'-')+'-September-2026';
  printDetails=[...target.querySelectorAll('details:not([open])')];printDetails.forEach(d=>d.open=true);
@@ -669,10 +1046,18 @@ function inputRows(data){
  add('S03','reporting_fleet',{distinct_service_users:data.fleet.users});
  add('S04','reporting_fleet',{due_assignments:data.fleet.assignments,completed_by_cutoff:data.fleet.completed});
  vesselReports.forEach(v=>{
-  add('S01',v.id,{vessel_name:v.name,submission_status:v.status});
-  if(v.status==='pending'){add('S02',v.id,{valid_replies:null,eligible_crew_days:null});return;}
-  add('S02',v.id,{valid_replies:v.replies,eligible_crew_days:v.crew*v.days});
-  const {id,name,status,replies,days,...activity}=v;add('S05',v.id,activity);
+  add('S01',v.id,{vessel_name:v.name,submission_status:v.status==='pending'?'no_submission':v.status});
+  if(v.status==='pending'){
+   add('S01',v.id,{eligible_crew:null,eligible_crew_days:null});
+   add('S02',v.id,{valid_replies:null,happy_calm:null,neutral:null,sad_low:null,angry_frustrated:null,anxious_worried:null,portReplies:null,portFrustrated:null,seaReplies:null,seaFrustrated:null});
+   add('S03',v.id,{distinct_service_users:null});add('S04',v.id,{due_assignments:null,completed_by_cutoff:null});
+   add('S05',v.id,{events:null,attended:null,duty:null,rest:null,choice:null,noReason:null,distinct:null});return;
+  }
+  add('S01',v.id,{eligible_crew:v.crew,eligible_crew_days:v.crew*v.days});
+  add('S02',v.id,{valid_replies:v.replies,portReplies:v.portReplies,portFrustrated:v.portFrustrated,seaReplies:v.seaReplies,seaFrustrated:v.seaFrustrated});
+  ['happy_calm','neutral','sad_low','angry_frustrated','anxious_worried'].forEach((key,i)=>add('S02',v.id,{[key]:v.feelings[i]}));
+  add('S03',v.id,{distinct_service_users:v.users});add('S04',v.id,{due_assignments:v.assignments,completed_by_cutoff:v.completed});
+  add('S05',v.id,{crew:v.crew,events:v.events,attended:v.attended,duty:v.duty,rest:v.rest,choice:v.choice,noReason:v.noReason,distinct:v.distinct});
  });
  return rows;
 }
